@@ -7,6 +7,11 @@ set output-meta on
 
 # ignore case for tab completion
 set completion-ignore-case on
+# cycle through possibilies for tab completion
+TAB: menu-complete
+# this apparently enables reverse completion with shift-TAB
+#\C-y: "\M--\C-i"
+"\e[Z": "\e--\C-i"
 
 # To allow the use of 8bit-characters like the german umlauts, comment out
 # the line below. However this makes the meta key not work as a meta key,
