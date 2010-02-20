@@ -59,6 +59,8 @@ alias dira='dir -A'
 
 # create alias for aptitude
 alias apt='aptitude'
+# separate command for starting vim in insert mode
+alias vimi='vim -c startinsert'
 
 # Replace default man viewer with vim
 # the script checks to make sure the man page exists before starting vim

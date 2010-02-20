@@ -2,7 +2,6 @@
 set nocompatible
 set gfn=Dina\ 8,Courier\ New\ 9
 "set gfn=proggycleanttsz:h12
-"set insertmode
 set guioptions+=b
 set nowrap
 set tabstop=2
@@ -135,4 +134,4 @@ function MyDiff()
 endfunction
 
 " Start in insert mode
-:startinsert
+":startinsert
