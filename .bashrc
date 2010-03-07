@@ -67,7 +67,7 @@ alias vimi='vim -c startinsert'
 vman() {
    if [ $# -eq 0 ]; then
      /usr/bin/man                                                                            
-   elif whatis $* ; then
+   elif man -k $* ; then
      /usr/bin/man $* | col -b | vim -R -c 'set ft=man nomod nolist noim noma' -
    else
      /usr/bin/man $*   

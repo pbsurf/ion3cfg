@@ -113,3 +113,6 @@ defbindings("WMPlex.toplevel", {
 --    kpress(META.."M", "mod_menu.menu(_, _sub, 'ctxmenu')"),
 })
 
+-- maintain EWMH _NET_CLIENT_LIST property - necessary for viewglob
+dopath("net_client_list")
+
