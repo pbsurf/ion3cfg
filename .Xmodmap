@@ -1,0 +1,6 @@
+! fix Tab key so that Shift-Tab works in vim in terminal
+keycode 23 = Tab
+! change Caps Lock to Shift
+remove lock = Caps_Lock
+add shift = Caps_Lock
+
