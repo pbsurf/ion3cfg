@@ -18,7 +18,8 @@
 -- or Mod4; see the output of 'xmodmap'.
 -- These may be defined in /etc/default/ion3, loaded as cfg_debian.
 dopath("cfg_debian")
---META="Mod1+"
+-- use Windows key (Mod4) instead of Alt(Mod1)
+META="Mod4+"
 --ALTMETA=""
 
 -- Terminal emulator

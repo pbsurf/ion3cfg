@@ -10,14 +10,18 @@ if exists("syntax_on")
 endif
 let g:colors_name="vc"
 
+" for a 8/16 color terminal, specifying cterm colors by name
+"  instead of number automatically turns on bold
+" cterm colors here are based on rxvt defaults
 hi Normal	guifg=Black  guibg=grey95
-hi Comment	gui=NONE  guifg=SeaGreen  guibg=NONE ctermfg=green
+hi Comment	gui=NONE  guifg=SeaGreen  guibg=NONE ctermfg=2
 hi Constant	gui=NONE  guifg=#004488  guibg=NONE
 "hi Identifier	gui=NONE  guifg=Blue  guibg=NONE
-hi Statement 	gui=NONE  guifg=Blue  guibg=NONE  ctermfg=LightBlue
-hi PreProc	gui=NONE  guifg=Blue  guibg=NONE  ctermfg=LightBlue	
-hi Type		gui=NONE  guifg=Blue  guibg=NONE  ctermfg=LightBlue
-hi Special	gui=NONE  guifg=SteelBlue  guibg=NONE  ctermfg=LightBlue
+hi Function	gui=NONE  cterm=NONE 
+hi Statement 	gui=NONE  guifg=Blue  guibg=NONE  ctermfg=6
+hi PreProc	gui=NONE  guifg=Blue  guibg=NONE  ctermfg=3
+hi Type		gui=NONE  guifg=Blue  guibg=NONE  ctermfg=6
+hi Special	gui=NONE  guifg=SteelBlue  guibg=NONE  ctermfg=6
 "selection text
 hi Visual gui=NONE guifg=White guibg=DarkBlue
 "hi Underlined	

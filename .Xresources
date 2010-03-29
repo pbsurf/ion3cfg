@@ -11,9 +11,10 @@ UXTerm*rightScrollBar: True
 UXTerm*saveLines: 5000
 
 ! Rxvt also recognizes XTerm resources, so, e.g., saveLines could be combined
+!  font was "6x13"
 Rxvt.background: Black
 Rxvt.foreground: White
-Rxvt.font: 6x13
+Rxvt.font: -xos4-termina-medium-r-normal--12-120-72-72-c-60-iso10646-1
 Rxvt.scrollBar_right: True
 Rxvt.saveLines: 5000
 

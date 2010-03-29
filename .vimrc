@@ -8,6 +8,8 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 colorscheme vc
+" this may be necessary for 256 color terminal
+"set t_Co=256
 "I always accidently hit the insert key...
 imap <Insert> <Delete>
 "Don't want middle button paste
