@@ -17,6 +17,7 @@ hi Normal	guifg=Black  guibg=grey95
 hi Comment	gui=NONE  guifg=SeaGreen  guibg=NONE ctermfg=2
 hi Constant	gui=NONE  guifg=#004488  guibg=NONE
 "hi Identifier	gui=NONE  guifg=Blue  guibg=NONE
+hi String gui=NONE  cterm=NONE  ctermfg=5
 hi Function	gui=NONE  cterm=NONE 
 hi Statement 	gui=NONE  guifg=Blue  guibg=NONE  ctermfg=6
 hi PreProc	gui=NONE  guifg=Blue  guibg=NONE  ctermfg=3

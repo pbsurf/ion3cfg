@@ -26,7 +26,7 @@
 
 
 local defaults = {
-   update_interval = 5000, -- in milliseconds
+   update_interval = 3000, -- in milliseconds
 }
 
 local settings = table.join(statusd.get_config("meminfo"), defaults)
@@ -66,9 +66,37 @@ local function get_meminfo()
    return meminfo_table
 end
 
+-- get CPU info from proc stat
+local lastcputot = 0
+local lastcpuidle = 0
+local function get_cpuinfo()
+   local cputimes, cputot = {},0
+   local f = io.open('/proc/stat', 'r')
+   if (f == nil) then return nil end
+   -- just need the first line (totals for all CPUs)
+   local s = f:read("*l")
+   f:close()
+   for x in string.gmatch(s, "%d+") do
+     table.insert(cputimes, tonumber(x))
+   end
+   for ii, val in ipairs(cputimes) do
+     cputot = cputot + val
+   end
+   -- idle time is 4th number
+   cpuidle_p = 100*((cputimes[4] - lastcpuidle)/(cputot - lastcputot))
+   lastcputot, lastcpuidle = cputot, cputimes[4]
+   return cpuidle_p
+end
+
 local function update_meminfo()
    local t = get_meminfo()
-   if (t == nil) then return nil end
+   local c = get_cpuinfo()
+   if (t == nil or c == nil) then return nil end   
+   -- HACK: include leading colon so ion3 doesn't strip the leading space and
+   --  defeat our efforts to keep length of text from changing as CPU usage crosses
+   --  10%.  To use in statusbar template: "CPU%meminfo_cpu_usage_p"
+   statusd.inform("meminfo_cpu_idle_p", string.format(": %2d%%", math.round(c)))
+   statusd.inform("meminfo_cpu_usage_p", string.format(": %2d%%", math.round(100-c)))   
 
    statusd.inform("meminfo_mem_total", guess_mem_unit(t.MemTotal))
    statusd.inform("meminfo_mem_used", guess_mem_unit(t.MemTotal - t.MemFree))

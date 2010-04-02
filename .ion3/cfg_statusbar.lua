@@ -36,7 +36,8 @@ mod_statusbar.create{
     -- right, respectively, and %systray is a placeholder for system tray
     -- windows and icons.
     --
-    template="[ %date || CPU: %load_1min MEM: %meminfo_mem_used_p ] %workspace_pager %filler%systray",
+    -- HACK: ion3 strips leading space from meter strings, so include colon in meter string!
+    template="[ %date || CPU%meminfo_cpu_usage_p MEM: %meminfo_mem_used_p ] %workspace_pager %filler%systray",
     --template="[ %date || load: %load ] %filler%systray",
     --template="[ %date || load:% %>load || mail:% %>mail_new/%>mail_total ] %filler%systray",
     --template="[ %date || load: %05load_1min || mail: %02mail_new/%02mail_total ] %filler%systray",
