@@ -45,66 +45,70 @@
 -- 
 
 local function update_frame()
-    local fr
-    ioncore.defer( function() 
-	local cur=ioncore.current()
-	if obj_is(cur, "WClientWin") and
-	  obj_is(cur:parent(), "WMPlex") then
-	    cur=cur:parent()
-	end
-	fr=cur:name()
-	mod_statusbar.inform('workspace_frame', fr)
-	mod_statusbar.update()
-    end)
+  local fr
+  ioncore.defer( function() 
+    local cur=ioncore.current()
+    if not cur then return; end
+    if obj_is(cur, "WClientWin") and
+      obj_is(cur:parent(), "WMPlex") then
+        cur=cur:parent()
+    end
+    fr=cur:name()
+    mod_statusbar.inform('workspace_frame', fr)
+    mod_statusbar.update()
+  end)
 end
 
 local function update_workspace()
-    local scr=ioncore.find_screen_id(0)
-    local curws = scr:mx_current()
-    local wstype, c
-    local pager=""
-    local name_pager=""
-    local name_pager_plus=""
-    local curindex = scr:get_index(curws)+1
-    n = scr:mx_count(1)
-    for i=1,n do
-        tmpws=scr:mx_nth(i-1)
-        wstype=obj_typename(tmpws)
-	if wstype=="WIonWS" then
-	    c="i"
-	elseif wstype=="WFloatWS" then
-	    c="f"
-	elseif wstype=="WPaneWS" then
-	    c="p"
-	elseif wstype=="WGroupWS" then
-	    c="g"
-	else
-	    c="c"
-	end
-	if i==curindex then
-            name_pager_plus=name_pager_plus.." ["..tmpws:name().."]"
-            name_pager=name_pager.." ["..tmpws:name().."]"
-	    pager=pager.." ["..(i)..c.."] "
-	else
-            name_pager_plus=name_pager_plus.." "..(i)..":"..tmpws:name()
-            name_pager=name_pager.." "..tmpws:name()
-	    pager=pager.." "..(i)..c.." "
-	end
+  local scr=ioncore.find_screen_id(0)
+  if not scr then return; end
+  local curws = scr:mx_current()
+  if not curws then return; end
+  local wstype, c
+  local pager=""
+  local name_pager=""
+  local name_pager_plus=""
+  local curindex = scr:get_index(curws)+1
+  n = scr:mx_count(1)
+  for i=1,n do
+    tmpws=scr:mx_nth(i-1)
+    wstype=obj_typename(tmpws)
+    if wstype=="WIonWS" then
+      c="i"
+    elseif wstype=="WFloatWS" then
+      c="f"
+    elseif wstype=="WPaneWS" then
+      c="p"
+    elseif wstype=="WGroupWS" then
+      c="g"
+    else
+      c="c"
     end
+    if i==curindex then
+      name_pager_plus=name_pager_plus.." ["..tmpws:name().."]"
+      name_pager=name_pager.." ["..tmpws:name().."]"
+      --pager=pager.." ["..(i)..c.."] "
+      pager=pager.."["..(i)..c.."]"
+    else
+      name_pager_plus=name_pager_plus.." "..(i)..":"..tmpws:name()
+      name_pager=name_pager.." "..tmpws:name()
+      pager=pager.." "..(i)..c.." "
+    end
+  end
 
-    local fr,cur
+  local fr,cur
 
-    -- Older versions without an ioncore.current() should
-    -- skip update_frame.
-    update_frame()
+  -- Older versions without an ioncore.current() should
+  -- skip update_frame.
+  update_frame()
 
-    ioncore.defer( function()
-	mod_statusbar.inform('workspace_pager', pager)
-	mod_statusbar.inform('workspace_name', curws:name())
-        mod_statusbar.inform('workspace_name_pager', name_pager)
-        mod_statusbar.inform('workspace_num_name_pager', name_pager_plus)
-	mod_statusbar.update()
-    end)
+  ioncore.defer( function()
+    mod_statusbar.inform('workspace_pager', pager)
+    mod_statusbar.inform('workspace_name', curws:name())
+    mod_statusbar.inform('workspace_name_pager', name_pager)
+    mod_statusbar.inform('workspace_num_name_pager', name_pager_plus)
+    mod_statusbar.update()
+  end)
 end
 
 ioncore.get_hook("region_notify_hook"):add(update_workspace)

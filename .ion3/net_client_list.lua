@@ -33,7 +33,9 @@ local function add_client(cwin)
 end
 
 local function remove_client(xid)
-        local rootwin = ioncore.current():rootwin_of()
+        local cur = ioncore.current()
+        if not cur then return; end
+        local rootwin = cur:rootwin_of()
         local list = {n=0}
 
         ioncore.clientwin_i(function (cwin)

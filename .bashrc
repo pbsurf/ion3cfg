@@ -59,6 +59,12 @@ alias dira='dir -A'
 
 # create alias for aptitude
 alias apt='aptitude'
+# try this: always open vim in new window
+#  disown suppresses exit notification
+newvim() {
+  rxvt -e vim $* & disown
+}
+alias vim='newvim'
 # separate command for starting vim in insert mode
 alias vimi='vim -c startinsert'
 
@@ -69,7 +75,7 @@ vman() {
    if [ $# -eq 0 ]; then
      /usr/bin/man                                                                            
    elif [ -n "`apropos -e $*`" ] || [ -n "`apropos $*`" ]; then
-     /usr/bin/man $* | col -b | vim -R -c 'set ft=man nomod nolist noim noma' -
+     /usr/bin/man $* | col -b | /usr/bin/vim -R -c "set ft=man nomod nolist noim noma title titlestring=man\ $*" -
    else
      /usr/bin/man $*   
    fi
