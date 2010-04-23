@@ -65,10 +65,14 @@ defbindings("WFrame", {
     mpress("Button5@tab", "WScreen.switch_next(_)"),
     mpress("Button4@tab", "WScreen.switch_prev(_)"),
 
-    
-    mpress("Button5", "_:parent():switch_next()"),
-    mpress("Button4", "_:parent():switch_prev()"),
+    -- switch between workspaces; don't quite understand, since the
+    --  above code switches between tabs!
+    -- added @border to suppress in empty frames and, most importantly,
+    --  1 pixel border between frame and tabs
+    mpress("Button5@border", "_:parent():switch_next()"),
+    mpress("Button4@border", "_:parent():switch_prev()"),
 
+    -- MOD + wheel anywhere switches workspaces
     mpress(MOD1.."Button4", "_:parent():switch_prev()"),
     mpress(MOD1.."Button5", "_:parent():switch_next()"),
     

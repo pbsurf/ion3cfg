@@ -45,7 +45,11 @@ esac
 #fi
 
 #if [ "$TERM" != "dumb" ]; then
-eval "`dircolors -b`"
+if [ -e "$HOME/.dircolors" ]; then
+  eval "`dircolors -b $HOME/.dircolors`"
+else
+  eval "`dircolors -b`"
+fi
 alias ls='ls --color=auto'
 #alias vdir='ls --color=auto --format=vertical'
 alias dir='ls --color=auto --format=long'
