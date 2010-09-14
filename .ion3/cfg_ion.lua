@@ -20,7 +20,8 @@
 dopath("cfg_debian")
 -- use Windows key (Mod4) instead of Alt(Mod1)
 META="Mod4+"
---ALTMETA=""
+-- ALTMETA guards Fn key bindings, which we essentially want to disable
+ALTMETA="Control+Mod4+"
 
 -- Terminal emulator
 --XTERM="xterm"
@@ -106,11 +107,11 @@ dopath("cfg_mouse")
 defbindings("WMPlex.toplevel", {
     bdoc("Run a terminal emulator."),
     kpress("Mod4+C", "ioncore.exec_on(_, XTERM or 'x-terminal-emulator')"),
-    kpress("F2", nil),
+    --kpress("F2", nil),
 
     bdoc("Query for command line to execute."),
     kpress("Mod4+R", "mod_query.query_exec(_)"),
-    kpress("F3", nil)
+    --kpress("F3", nil)
 --    kpress(META.."M", "mod_menu.menu(_, _sub, 'ctxmenu')"),
 })
 

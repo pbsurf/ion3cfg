@@ -8,11 +8,18 @@
 # inputrc
 export INPUTRC=$HOME/.inputrc
 
+# fuck unicode
+export LANG="en_US"  # or try "C"
+export LC_ALL="en_US"
+
 # disable use of C-s/C-1 for scroll lock
 tty > /dev/null && stty -ixon -ixoff
 
 # don't put duplicate lines in the history. See bash(1) for more options
 export HISTCONTROL=ignoredups
+# save more than default of 500
+export HISTSIZE=1000
+export HISTFILESIZE=1000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
