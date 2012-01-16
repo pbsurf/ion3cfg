@@ -9,8 +9,8 @@
 export INPUTRC=$HOME/.inputrc
 
 # fuck unicode
-export LANG="en_US"  # or try "C"
-export LC_ALL="en_US"
+export LANG="C"  # was "en_US" - not avail on debian
+export LC_ALL="C"
 
 # disable use of C-s/C-1 for scroll lock
 tty > /dev/null && stty -ixon -ixoff
@@ -64,8 +64,8 @@ alias dir='ls --color=auto --format=long'
 
 # some more ls aliases
 #alias ll='ls -l'
-alias la='ls -A'
-#alias l='ls -CF'
+#alias la='ls -A'
+alias l='dir -A'
 alias dira='dir -A'
 
 # create alias for aptitude
@@ -73,7 +73,7 @@ alias apt='aptitude'
 # try this: always open vim in new window
 #  disown suppresses exit notification
 newvim() {
-  rxvt -e vim $* & disown
+  x-terminal-emulator -e vim $* & disown
 }
 alias vim='newvim'
 # separate command for starting vim in insert mode
@@ -100,4 +100,3 @@ fi
 
 # prompt appearance
 source $HOME/.bashprompt
-
