@@ -93,6 +93,13 @@ vman() {
 }
 alias man='vman'
 
+# Syntax highlighting for cat and less
+#alias scat='pygmentize-2.7 -f terminal --'
+# provided by source-highlight package
+alias scat='/usr/share/source-highlight/src-hilite-lesspipe.sh'
+alias vless='/usr/share/vim/vimcurrent/macros/less.sh'
+alias ack='/usr/bin/ack-grep'
+
 # enable bash completion in interactive shells
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
