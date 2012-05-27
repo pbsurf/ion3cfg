@@ -107,8 +107,16 @@ command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 
 " Key mappings, settings, etc. for Windows behavior
 source $VIMRUNTIME/mswin.vim
-" Included in mswin.vim
-"behave mswin
+"behave mswin  -- Included in mswin.vim
+
+" mswin.vim seems to map C-Z, C-Y correctly to undo/redo, but not the
+" clipboard commands.  This lets me select text with the mouse and use C-C, C-X
+vmap <C-c> y<Esc>i
+vmap <C-x> d<Esc>i
+" this lets me paste with C-V in insert mode
+imap <C-v> <Esc>pa
+" use system clipboard
+"set clipboard=unnamed
 
 set diffexpr=MyDiff()
 function MyDiff()
