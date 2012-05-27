@@ -84,11 +84,11 @@ alias vimi='vim -c startinsert'
 # Note the "` `" around the calls to apropos - more bash insanity
 vman() {
    if [ $# -eq 0 ]; then
-     /usr/bin/man                                                                            
+     /usr/bin/man
    elif [ -n "`apropos -e $*`" ] || [ -n "`apropos $*`" ]; then
      /usr/bin/man $* | col -b | /usr/bin/vim -R -c "set ft=man nomod nolist noim noma title titlestring=man\ $*" -
    else
-     /usr/bin/man $*   
+     /usr/bin/man $*
    fi
 }
 alias man='vman'
