@@ -68,6 +68,9 @@ alias dir='ls --color=auto --format=long'
 alias l='dir -A'
 alias dira='dir -A'
 
+# find syntax is a bit too verbose
+alias ff='find . -iname'
+
 # create alias for aptitude
 alias apt='aptitude'
 # try this: always open vim in new window

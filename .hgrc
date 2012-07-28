@@ -1,0 +1,10 @@
+[ui]
+username=mwhite
+
+[extensions]
+hgext.crecord=$HOME/.hgext/crecord
+hgext.fetch=
+
+[alias]
+l = log --limit 10
+s = status
