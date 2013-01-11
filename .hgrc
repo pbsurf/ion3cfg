@@ -1,5 +1,6 @@
 [ui]
 username=mwhite
+merge = internal:merge
 
 [extensions]
 hgext.crecord=$HOME/.hgext/crecord
