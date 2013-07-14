@@ -4,7 +4,7 @@ xmodmap $HOME/.Xmodmap
 # path to my fonts
 xset +fp $HOME/.fonts
 # for clipboard sync
-vmware-user &
+vmware-user-suid-wrapper &
 # start window manager
-ion3
+notion
 
