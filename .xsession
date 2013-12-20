@@ -1,4 +1,4 @@
-xrandr --output default --mode 1280x1024
+xrandr --output Virtual1 --mode 1280x1024
 # remap some keys
 xmodmap $HOME/.Xmodmap
 # path to my fonts
