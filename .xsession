@@ -4,7 +4,8 @@ xmodmap $HOME/.Xmodmap
 # path to my fonts
 xset +fp $HOME/.fonts
 # for clipboard sync
-vmware-user-suid-wrapper &
+#vmware-user-suid-wrapper &
+vmware-user &
 # start window manager
 notion
 

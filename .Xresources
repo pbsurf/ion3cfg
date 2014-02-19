@@ -6,16 +6,20 @@ Xft.dpi: 96.0
 
 !Xcursor.theme: flatcursor
 
+XTerm*background: Black
+XTerm*foreground: White
 UXTerm*scrollBar: True
 UXTerm*rightScrollBar: True
 UXTerm*saveLines: 5000
+XTerm*font: -xos4-termina-medium-r-normal--12-120-72-72-c-60-iso10646-1
 
 ! Rxvt also recognizes XTerm resources, so, e.g., saveLines could be combined
 !  font was "6x13"
 Rxvt.background: Black
 Rxvt.foreground: White
 Rxvt.font: -xos4-termina-medium-r-normal--12-120-72-72-c-60-ibm-cp437
-!Rxvt.font: -xos4-termina-medium-r-normal--12-120-72-72-c-60-iso10646-1
+URxvt.font: -xos4-termina-medium-r-normal--12-120-72-72-c-60-iso10646-1
+URxvt.boldFont:
 Rxvt.scrollBar_right: True
 Rxvt.saveLines: 5000
 
