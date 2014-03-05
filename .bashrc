@@ -58,8 +58,8 @@ else
   eval "`dircolors -b`"
 fi
 alias ls='ls --color=auto'
-#alias vdir='ls --color=auto --format=vertical'
-alias dir='ls --color=auto --format=long'
+alias dir='ls --format=long --group-directories-first -p -G'
+#alias vdir='ls --format=vertical'
 #fi
 
 # some more ls aliases

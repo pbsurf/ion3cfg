@@ -1,6 +1,6 @@
 --
 -- Ion statusbar module configuration file
--- 
+--
 
 
 -- Create a statusbar
@@ -13,7 +13,7 @@ mod_statusbar.create{
     -- Swallow systray windows
     systray=true,
 
-    -- Template. Tokens %string are replaced with the value of the 
+    -- Template. Tokens %string are replaced with the value of the
     -- corresponding meter. Currently supported meters are:
     --   date          date
     --   load          load average (1min, 5min, 15min)
@@ -26,7 +26,7 @@ mod_statusbar.create{
     --   mail_*_total  mail count
     --
     -- Space preceded by % adds stretchable space for alignment of variable
-    -- meter value widths. > before meter name aligns right using this 
+    -- meter value widths. > before meter name aligns right using this
     -- stretchable space , < left, and | centers.
     -- Meter values may be zero-padded to a width preceding the meter name.
     -- These alignment and padding specifiers and the meter name may be
@@ -37,7 +37,8 @@ mod_statusbar.create{
     -- windows and icons.
     --
     -- HACK: ion3 strips leading space from meter strings, so include colon in meter string!
-    template="[ %date || CPU%meminfo_cpu_usage_p MEM: %meminfo_mem_used_p ]  %workspace_pager %filler%systray",
+    --  workspace_pager, etc. provided by statusbar_workspace.lua
+    template="[ %date || CPU%meminfo_cpu_usage_p MEM: %meminfo_mem_used_adj_p ]  %workspace_num_name_pager %filler%systray",
     --template="[ %date || load: %load ] %filler%systray",
     --template="[ %date || load:% %>load || mail:% %>mail_new/%>mail_total ] %filler%systray",
     --template="[ %date || load: %05load_1min || mail: %02mail_new/%02mail_total ] %filler%systray",
@@ -58,14 +59,14 @@ mod_statusbar.launch_statusd{
         -- Locale date format (usually shows seconds, which would require
         -- updating rather often and can be distracting)
         --date_format='%c',
-        
-        -- Additional date formats. 
-        --[[ 
-        formats={ 
+
+        -- Additional date formats.
+        --[[
+        formats={
             time = '%H:%M', -- %date_time
         }
         --]]
-    },      
+    },
 
     -- Load meter
     load={

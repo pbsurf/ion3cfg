@@ -1,0 +1,12 @@
+[user]
+	name = pbsurf
+	email = pbsurf@gmail.com
+
+[alias]
+  s = status
+  d = diff
+  l = log
+  man = ls-files
+  ci = commit
+  br = branch
+  co = checkout
