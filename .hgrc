@@ -3,9 +3,21 @@ username=mwhite
 merge = internal:merge
 
 [extensions]
-hgext.crecord=$HOME/.hgext/crecord
-hgext.fetch=
+rebase=
+histedit=
+shelve=
+color=
+crecord=$HOME/.hgext/crecord
 
 [alias]
 l = log --limit 10
 s = status
+show = log --patch --rev
+
+[color]
+status.modified = yellow
+status.added = green
+status.removed = red
+status.deleted = cyan
+status.unknown = magenta
+status.ignored = blue
