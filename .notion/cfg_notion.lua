@@ -3,13 +3,13 @@
 --
 -- This file only includes some settings that are rather frequently altered.
 -- The rest of the settings are in cfg_ioncore.lua and individual modules'
--- configuration files (cfg_modulename.lua). 
+-- configuration files (cfg_modulename.lua).
 --
--- When any binding and other customisations that you want are minor, it is 
+-- When any binding and other customisations that you want are minor, it is
 -- recommended that you include them in a copy of this file in ~/.ion3/.
 -- Simply create or copy the relevant settings at the end of this file (from
--- the other files), recalling that a key can be unbound by passing 'nil' 
--- (without the quotes) as the callback. For more information, please see 
+-- the other files), recalling that a key can be unbound by passing 'nil'
+-- (without the quotes) as the callback. For more information, please see
 -- the Ion configuration manual available from the Ion Web page.
 --
 
@@ -46,18 +46,18 @@ ioncore.set{
     -- Movement commands warp the pointer to frames instead of just
     -- changing focus. Enabled by default.
     --warp=true,
-    
+
     -- Switch frames to display newly mapped windows
     --switchto=true,
-    
+
     -- Default index for windows in frames: one of 'last', 'next' (for
     -- after current), or 'next-act' (for after current and anything with
     -- activity right after it).
     --frame_default_index='next',
-    
+
     -- Auto-unsqueeze transients/menus/queries.
     --unsqueeze=true,
-    
+
     -- Display notification tooltips for activity on hidden workspace.
     --screen_notify=true,
 }
@@ -67,7 +67,7 @@ ioncore.set{
 -- commented out below, except mod_dock. If you do not want to load
 -- something, comment out this line, and uncomment the lines corresponding
 -- the the modules or configuration files that you want, below.
--- The modules' configuration files correspond to the names of the 
+-- The modules' configuration files correspond to the names of the
 -- modules with 'mod' replaced by 'cfg'.
 dopath("cfg_defaults")
 
@@ -77,7 +77,7 @@ dopath("cfg_defaults")
 -- Load some kludges to make apps behave better.
 --dopath("cfg_kludges")
 
--- Define some layouts. 
+-- Define some layouts.
 --dopath("cfg_layouts")
 
 -- Load some modules. Bindings and other configuration specific to modules
@@ -96,13 +96,35 @@ dopath("cfg_defaults")
 
 dopath("cfg_mouse")
 
--- Uncommenting the following lines should get you plain-old-menus instead
--- of query-menus.
+defbindings("WScreen", {
+    -- use Meta+Tab to cycle through workspaces since I use mouse to switch focus within workspace
+    bdoc("Switch to next/previous object within current screen."),
+    kpress(META.."Tab", "WScreen.switch_next(_)"),
+    kpress(META.."Shift+Tab", "WScreen.switch_prev(_)"),
 
---defbindings("WScreen", {
---    kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
---})
---
+    -- Provide another shortcut for creating workspace?  Rare action, so don't bother for now
+    --bdoc("Create a new workspace of chosen default type."),
+    --kpress(META.."F9", "ioncore.create_ws(_)"),
+
+    -- Uncommenting the following lines should get you plain-old-menus instead of query-menus.
+    --kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
+
+    -- Meta+comma/period replace previous role of Meta+Tab
+    bdoc("Circulate focus."),
+    kpress(META.."comma", "ioncore.goto_next(_chld, 'right')", "_chld:non-nil"),
+    kpress(META.."period", "ioncore.goto_next(_chld, 'left')", "_chld:non-nil"),
+})
+
+-- need to remove Meta+Tab binding from WTiling since it interferes with WScreen binding
+defbindings("WTiling", {
+    kpress(META.."Tab", nil),
+    bdoc("Go to frame above/below/right/left of current frame."),
+    kpress(META.."Up", "ioncore.goto_next(_sub, 'up', {no_ascend=_})"),
+    kpress(META.."Down", "ioncore.goto_next(_sub, 'down', {no_ascend=_})"),
+    kpress(META.."Right", "ioncore.goto_next(_sub, 'right')"),
+    kpress(META.."Left", "ioncore.goto_next(_sub, 'left')"),
+})
+
 --Change ion3 bindings to use Windows Key and unmap Fn key binding
 defbindings("WMPlex.toplevel", {
     bdoc("Run a terminal emulator."),
@@ -117,4 +139,3 @@ defbindings("WMPlex.toplevel", {
 
 -- maintain EWMH _NET_CLIENT_LIST property - necessary for viewglob
 dopath("net_client_list")
-
