@@ -118,11 +118,18 @@ defbindings("WScreen", {
 -- need to remove Meta+Tab binding from WTiling since it interferes with WScreen binding
 defbindings("WTiling", {
     kpress(META.."Tab", nil),
-    bdoc("Go to frame above/below/right/left of current frame."),
+    bdoc("Go to frame above/below/right of/left of current frame."),
     kpress(META.."Up", "ioncore.goto_next(_sub, 'up', {no_ascend=_})"),
     kpress(META.."Down", "ioncore.goto_next(_sub, 'down', {no_ascend=_})"),
     kpress(META.."Right", "ioncore.goto_next(_sub, 'right')"),
     kpress(META.."Left", "ioncore.goto_next(_sub, 'left')"),
+})
+
+defbindings("WFrame", {
+    -- use Meta+Ctrl+Tab to cycle through tabs within a frame
+    bdoc("Switch to next/previous object within current frame."),
+    kpress(META.."Control+Tab", "WScreen.switch_next(_)"),
+    kpress(META.."Shift+Control+Tab", "WScreen.switch_prev(_)"),
 })
 
 --Change ion3 bindings to use Windows Key and unmap Fn key binding
