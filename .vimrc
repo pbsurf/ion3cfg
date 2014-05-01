@@ -1,7 +1,8 @@
+" VIM config file
+
 " no attempt at vi compatibility
 set nocompatible
 set gfn=Dina\ 8,Courier\ New\ 9
-"set gfn=proggycleanttsz:h12
 set guioptions+=b
 set nowrap
 set tabstop=2
@@ -30,10 +31,12 @@ inoremap <silent> <F5> <ESC> :setlocal invspell<CR>a
 
 " Case insensitive search unless uppercase char typed
 set ignorecase smartcase
+" Incremental searching
+set incsearch
+" Switch on highlighting of the last used search pattern
+set hlsearch
 
-" From:
-"  source $VIMRUNTIME/vimrc_example.vim
-" these may need to be revised
+" From: $VIMRUNTIME/vimrc_example.vim - these may need to be revised
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -47,7 +50,6 @@ set directory=$TEMP,$TMP,~/tmp,/tmp,$VIM,.
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -57,13 +59,10 @@ set mouse=a
 
 " Switch syntax highlighting on
 syntax on
-" Switch on highlighting of the last used search pattern
-set hlsearch
 
 " Copied directly from vimrc_example
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
   " 'cindent' is on in C files, etc.
@@ -92,11 +91,8 @@ if has("autocmd")
     \ endif
 
   augroup END
-
 else
-
   set autoindent		" always set autoindenting on
-
 endif " has("autocmd")
 
 " Convenient command to see the difference between the current buffer and the
@@ -115,33 +111,35 @@ vmap <C-c> y<Esc>i
 vmap <C-x> d<Esc>i
 " this lets me paste with C-V in insert mode
 imap <C-v> <Esc>pa
-" use system clipboard
+" use system clipboard - doesn't seem to work right, but Shift-Ins works, so no problem
 "set clipboard=unnamed
 
-set diffexpr=MyDiff()
-function MyDiff()
-  let opt = '-a --binary '
-  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  let arg1 = v:fname_in
-  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  let arg2 = v:fname_new
-  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  let arg3 = v:fname_out
-  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  let eq = ''
-  if $VIMRUNTIME =~ ' '
-    if &sh =~ '\<cmd'
-      let cmd = '""' . $VIMRUNTIME . '\diff"'
-      let eq = '"'
+if has('win32')
+  set diffexpr=MyDiff()
+  function MyDiff()
+    let opt = '-a --binary '
+    if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+    if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+    let arg1 = v:fname_in
+    if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+    let arg2 = v:fname_new
+    if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+    let arg3 = v:fname_out
+    if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+    let eq = ''
+    if $VIMRUNTIME =~ ' '
+      if &sh =~ '\<cmd'
+        let cmd = '""' . $VIMRUNTIME . '\diff"'
+        let eq = '"'
+      else
+        let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+      endif
     else
-      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+      let cmd = $VIMRUNTIME . '\diff'
     endif
-  else
-    let cmd = $VIMRUNTIME . '\diff'
-  endif
-  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-endfunction
+    silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+  endfunction
+endif
 
 " Start in insert mode
 ":startinsert
