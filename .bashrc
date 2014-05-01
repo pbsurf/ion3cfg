@@ -45,6 +45,7 @@ esac
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
+# Note that aliases can't take args - have to define an intermediate fn
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 #if [ -f ~/.bash_aliases ]; then
@@ -73,14 +74,17 @@ alias ff='find . -iname'
 
 # create alias for aptitude
 alias apt='aptitude'
-# try this: always open vim in new window
+# try this: always open vim in new window (if running under xterm)
 #  disown suppresses exit notification
-newvim() {
-  x-terminal-emulator -e vim $* & disown
-}
-alias vim='newvim'
+if type x-terminal-emulator &> /dev/null; then
+disownvim() { x-terminal-emulator -e vim $* & disown; }
+alias vim='disownvim'
+fi
 # separate command for starting vim in insert mode
 alias vimi='vim -c startinsert'
+# similarly for scite
+disownscite() { scite $* & disown; }
+alias scite='disownscite'
 
 # Replace default man viewer with vim
 # the script checks to make sure the man page exists before starting vim
