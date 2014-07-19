@@ -4,11 +4,12 @@
 set nocompatible
 set gfn=Dina\ 8,Courier\ New\ 9
 set guioptions+=b
-set nowrap
 set tabstop=2
 set shiftwidth=2
 set expandtab
 colorscheme vc
+" Switch syntax highlighting on
+syntax on
 " this may be necessary for 256 color terminal
 "set t_Co=256
 "I always accidently hit the insert key...
@@ -35,6 +36,13 @@ set ignorecase smartcase
 set incsearch
 " Switch on highlighting of the last used search pattern
 set hlsearch
+" set search highlight colors independent of syntax highlighting theme
+hi Search cterm=NONE ctermfg=Black ctermbg=Yellow
+" use F2 to toggle line numbering
+nmap <f2> :set number! <CR>
+" use F3 to toggle word wrap
+set nowrap
+nmap <f3> :set wrap! <CR>
 
 " From: $VIMRUNTIME/vimrc_example.vim - these may need to be revised
 
@@ -56,9 +64,6 @@ map Q gq
 
 " always use the mouse
 set mouse=a
-
-" Switch syntax highlighting on
-syntax on
 
 " Copied directly from vimrc_example
 " Only do this part when compiled with support for autocommands.
@@ -94,6 +99,12 @@ if has("autocmd")
 else
   set autoindent		" always set autoindenting on
 endif " has("autocmd")
+
+" highlight trailing spaces
+hi ExtraWhitespace cterm=NONE ctermbg=Red
+autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ containedin=ALL
+" remove trailing whitespace on save - disabled for now
+"autocmd BufWritePre * :%s/\s\+$//e
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -143,3 +154,4 @@ endif
 
 " Start in insert mode
 ":startinsert
+
