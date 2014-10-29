@@ -55,9 +55,9 @@ set backupdir=$TEMP,$TMP,~/tmp,/tmp,$VIM,.
 " location for swap files
 set directory=$TEMP,$TMP,~/tmp,/tmp,$VIM,.
 
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
+set history=50  " keep 50 lines of command line history
+set ruler       " show the cursor position all the time
+set showcmd     " display incomplete commands
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -97,19 +97,25 @@ if has("autocmd")
 
   augroup END
 else
-  set autoindent		" always set autoindenting on
+  set autoindent  " always set autoindenting on
 endif " has("autocmd")
 
-" highlight trailing spaces
-hi ExtraWhitespace cterm=NONE ctermbg=Red
-autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ containedin=ALL
+" highlight trailing spaces - from http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+highlight ExtraWhitespace cterm=NONE ctermbg=Red
+au BufWinEnter * let w:m1=matchadd('ExtraWhitespace', '\s\+$', -1)
+au InsertEnter * call matchdelete(w:m1)
+" this uses some crazy vim regex to reject whitespace behind the current cursor position
+au InsertEnter * let w:m2=matchadd('ExtraWhitespace', '\s\+\%#\@<!$', -1)
+au InsertLeave * call matchdelete(w:m2)
+au InsertLeave * let w:m1=matchadd('ExtraWhitespace', '\s\+$', -1)
+
 " remove trailing whitespace on save - disabled for now
 "autocmd BufWritePre * :%s/\s\+$//e
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-	 	\ | wincmd p | diffthis
+    \ | wincmd p | diffthis
 " End vimrc_example.vim
 
 " Key mappings, settings, etc. for Windows behavior
