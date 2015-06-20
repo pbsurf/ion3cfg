@@ -105,7 +105,6 @@ alias man='vman'
 # provided by source-highlight package
 alias scat='/usr/share/source-highlight/src-hilite-lesspipe.sh'
 alias vless='/usr/share/vim/vimcurrent/macros/less.sh'
-alias ack='/usr/bin/ack-grep'
 
 # simple HTTP server
 fileserver() {

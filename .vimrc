@@ -44,6 +44,11 @@ nmap <f2> :set number! <CR>
 set nowrap
 nmap <f3> :set wrap! <CR>
 
+" use F4 to toggle paste mode
+nnoremap <F4> :set invpaste paste?<CR>
+set pastetoggle=<F4>
+set showmode
+
 " From: $VIMRUNTIME/vimrc_example.vim - these may need to be revised
 
 " allow backspacing over everything in insert mode

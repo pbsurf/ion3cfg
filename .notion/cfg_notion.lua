@@ -113,6 +113,14 @@ defbindings("WScreen", {
     bdoc("Circulate focus."),
     kpress(META.."comma", "ioncore.goto_next(_chld, 'right')", "_chld:non-nil"),
     kpress(META.."period", "ioncore.goto_next(_chld, 'left')", "_chld:non-nil"),
+
+    -- volume control - copied from since-reverted commit to notion itself
+    bdoc("Mute/Unmute Sound."),
+    kpress("AnyModifier+XF86AudioMute", "notioncore.exec_on(_, 'amixer -q sset Master toggle')"),
+    bdoc("Increase Volume."),
+    kpress("AnyModifier+XF86AudioRaiseVolume", "notioncore.exec_on(_, 'amixer -q sset Master 5%+ unmute')"),
+    bdoc("Decrease Volume."),
+    kpress("AnyModifier+XF86AudioLowerVolume", "notioncore.exec_on(_, 'amixer -q sset Master 5%- unmute')"),
 })
 
 -- need to remove Meta+Tab binding from WTiling since it interferes with WScreen binding
@@ -130,6 +138,9 @@ defbindings("WFrame", {
     bdoc("Switch to next/previous object within current frame."),
     kpress(META.."Control+Tab", "WScreen.switch_next(_)"),
     kpress(META.."Shift+Control+Tab", "WScreen.switch_prev(_)"),
+    -- better yet, use META + ~
+    kpress(META.."grave", "WScreen.switch_next(_)"),
+    kpress(META.."Shift+grave", "WScreen.switch_prev(_)"),
 })
 
 --Change ion3 bindings to use Windows Key and unmap Fn key binding
