@@ -1,0 +1,11 @@
+ckeditor/
+assets/javascripts/vendor/
+assets/javascripts/ext/
+.idea/
+node_modules/
+tmp/cache/
+development.log
+newrelic_agent.log
+test.log
+**.min.js
+

@@ -25,22 +25,33 @@ export HISTFILESIZE=5000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# check for xterm
+`type x-terminal-emulator &> /dev/null` && [ -n "$DISPLAY" ] && IS_XTERM=true
+
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
+  debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
 
 # If this is an xterm set the title to user@host:dir
+# Note that PROMPT_COMMAND is a command to be executed just before displaying each prompt,
+#  whereas PS1 determines the appearance of the prompt itself
 case "$TERM" in
 xterm*|rxvt*)
-    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+    PROMPT_COMMAND='echo -ne "\033]0;${USER/matthew_white/}@${HOSTNAME/matthew-white.local/}: ${PWD/$HOME/~}\007"'
     ;;
 *)
     ;;
 esac
+
+# function to allow title to be set manually
+title() {
+  TITLE=$*;
+  export PROMPT_COMMAND='echo -ne "\033]0;$TITLE\007"'
+}
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -53,13 +64,16 @@ esac
 #fi
 
 #if [ "$TERM" != "dumb" ]; then
-if [ -e "$HOME/.dircolors" ]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # changes from OSX default: change dir from blue(e) to cyan(g)
+  export LSCOLORS="gxfxcxdxbxegedabagacad"
+elif [ -e "$HOME/.dircolors" ]; then
   eval "`dircolors -b $HOME/.dircolors`"
 else
   eval "`dircolors -b`"
 fi
-alias ls='ls --color=auto'
-alias dir='ls --format=long --group-directories-first -p -G'
+alias ls='ls -G'
+alias dir='ls -l -p -G'
 #alias vdir='ls --format=vertical'
 #fi
 
@@ -76,9 +90,9 @@ alias ff='find . -iname'
 alias apt='aptitude'
 # try this: always open vim in new window (if running under xterm)
 #  disown suppresses exit notification
-if type x-terminal-emulator &> /dev/null; then
-disownvim() { x-terminal-emulator -e vim $* & disown; }
-alias vim='disownvim'
+if [ -n "$IS_XTERM" ]; then
+  disownvim() { x-terminal-emulator -e vim $* & disown; }
+  alias vim='disownvim'
 fi
 # separate command for starting vim in insert mode
 alias vimi='vim -c startinsert'
@@ -103,8 +117,8 @@ alias man='vman'
 # Syntax highlighting for cat and less
 #alias scat='pygmentize-2.7 -f terminal --'
 # provided by source-highlight package
-alias scat='/usr/share/source-highlight/src-hilite-lesspipe.sh'
 alias vless='/usr/share/vim/vimcurrent/macros/less.sh'
+alias au='ag --color --pager "less -FXr"'
 
 # simple HTTP server
 fileserver() {
@@ -112,10 +126,40 @@ fileserver() {
 }
 alias server='fileserver'
 
-# enable bash completion in interactive shells
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+# if bash completion script has already run, BASH_COMPLETION will be set readonly
+if (unset BASH_COMPLETION 2> /dev/null) then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    BASH_COMPLETION=$(brew --prefix)/etc/bash_completion
+  else
+    BASH_COMPLETION=/etc/bash_completion
+  fi
+  # enable bash completion in interactive shells
+  if [ -f $BASH_COMPLETION ]; then
+    source $BASH_COMPLETION
+  fi
+fi
+# override and disable tilde expansion function in bash_completion
+_expand() {
+  return 0;
+}
+# show some extra info in git prompt
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+
+# upload dotfiles before sshing - only needs to be used on first connect
+sshrc() {
+  host=$1 ; shift
+  scp ~/.inputrc ~/.bash_profile ~/.bashrc $host:
+  ssh $host "$@"
+}
+
+# prompt appearance - if no .bashprompt, wrap existing prompt with color and leading newline
+if [ -f ~/.bashprompt ]; then
+  source $HOME/.bashprompt
+else
+  export PS1="\n\[\033[0;37;0;45m\]${PS1::-1}\[\033[m\] "
 fi
 
-# prompt appearance
-source $HOME/.bashprompt
+if [ -f ~/.airbnbrc ]; then
+  source $HOME/.airbnbrc
+fi

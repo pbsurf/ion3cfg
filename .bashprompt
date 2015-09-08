@@ -1,4 +1,4 @@
 # Prompt apperance for user terminal (white on blue)
 
-PS1='${debian_chroot:+($debian_chroot)}\n\[\033[0;37;0;44m\]\u@\h:\w>\[\033[m\] '
+PS1='\n\[\033[0;37;0;44m\]$(__git_ps1 "(%s)"):\w>\[\033[m\] '
 
