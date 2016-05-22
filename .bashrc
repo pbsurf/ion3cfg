@@ -33,11 +33,6 @@ shopt -s checkwinsize
 # check for Mac OS X
 [[ "$OSTYPE" == "darwin"* ]] && IS_OSX=true
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-  debian_chroot=$(cat /etc/debian_chroot)
-fi
-
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
 
@@ -67,16 +62,6 @@ if [ -n "$MC_TMPDIR" ]; then
 fi
 
 # Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# Note that aliases can't take args - have to define an intermediate fn
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-#if [ -f ~/.bash_aliases ]; then
-#    . ~/.bash_aliases
-#fi
-
-#if [ "$TERM" != "dumb" ]; then
 if [ -n "$IS_OSX" ]; then
   # changes from OSX default: change dir from blue(e) to cyan(g)
   export LSCOLORS="gxfxcxdxbxegedabagacad"
@@ -85,10 +70,14 @@ elif [ -e "$HOME/.dircolors" ]; then
 else
   eval "`dircolors -b`"
 fi
-alias ls='ls -G'
-alias dir='ls -l -p -G'
-#alias vdir='ls --format=vertical'
-#fi
+
+if [ -n "$IS_OSX" ]; then
+  alias ls='ls -G'
+  alias dir='ls -l -p -G'
+else
+  alias ls='ls --color=auto'
+  alias dir='ls --format=long --group-directories-first -p -G'
+fi
 
 # some more ls aliases
 #alias ll='ls -l'
@@ -97,7 +86,8 @@ alias l='dir -A'
 alias dira='dir -A'
 
 # find syntax is a bit too verbose - iname matches name w/o path; ipath whole path
-alias ff='find . -ipath'
+alias ff='find . -iname'
+alias fp='find . -ipath'
 
 # create alias for aptitude
 alias apt='aptitude'
@@ -108,7 +98,7 @@ if [ -n "$IS_XTERM" ]; then
   alias vim='disownvim'
 fi
 # similarly for scite
-disownscite() { scite $* & disown; }
+disownscite() { scite $* &> /dev/null & disown; }
 alias scite='disownscite'
 
 # Replace default man viewer with vim
@@ -161,9 +151,6 @@ fi
 _expand() {
   return 0;
 }
-# show some extra info in git prompt
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
 
 # upload dotfiles before sshing - only needs to be used on first connect
 sshrc() {
@@ -172,11 +159,16 @@ sshrc() {
   ssh $host "$@"
 }
 
-# prompt appearance - if no .bashprompt, wrap existing prompt with color and leading newline
-if [ -f ~/.bashprompt ]; then
-  source $HOME/.bashprompt
-else
+# prompt appearance - override in .localrc if desired
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  # ssh session: add purple background and leading newline to existing prompt
   export PS1="\n\[\033[0;37;0;45m\]${PS1::-1}\[\033[m\] "
+elif [[ $EUID -eq 0 ]]; then
+  # root: full prompt, red
+  export PS1='\n\[\033[0;37;0;41m\]\u@\h:\w>\[\033[m\] '
+else
+  # local user - path only, blue
+  export PS1='\n\[\033[0;37;0;44m\]:\w>\[\033[m\] '
 fi
 
 if [ -f ~/.localrc ]; then

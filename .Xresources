@@ -13,6 +13,11 @@ UXTerm*rightScrollBar: True
 UXTerm*saveLines: 5000
 XTerm*font: -xos4-termina-medium-r-normal--12-120-72-72-c-60-iso10646-1
 
+! prevent auto-scrolling when scrolling up
+URxvt*scrollTtyOutput: False
+URxvt*scrollWithBuffer: True
+URxvt*scrollTtyKeypress: True
+
 ! Rxvt also recognizes XTerm resources, so, e.g., saveLines could be combined
 !  font was "6x13"
 Rxvt.background: Black
