@@ -1,14 +1,36 @@
-[user]
-	name = pbsurf
-	email = pbsurf@gmail.com
-
 [alias]
   s = status
-  d = diff
-  l = log
+  d = !git --no-pager diff
+  dc = !git --no-pager diff --cached
   man = ls-files
-  ci = commit
-  br = branch
+  a = add
   co = checkout
+  b = branch
+  ba = branch -a
+  l = !git --no-pager log -n 10
+  f = fetch
+  r = reset
+  p = pull
+  pr = pull --rebase
+  ps = push
+  pf = push -f
+  pom = push origin master
+  cp = cherry-pick
+  up = !git fetch origin && git rebase origin/master
+  retire = "!f() { git checkout master && git tag archive/$1 $1 && git branch -D $1; }; f"
+  new = checkout -t origin/master -b
+  amend = commit --amend
+[color]
+  ui = auto
+[core]
+  editor = vim
+  excludesfile = ~/.gitignore_global
+  precomposeunicode = true
 [push]
-	default = simple
+  default = current
+[fetch]
+  prune = true
+[rerere]
+  enabled = 1
+[include]
+  path = ~/.gitconfig_local

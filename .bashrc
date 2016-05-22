@@ -9,17 +9,20 @@
 export INPUTRC=$HOME/.inputrc
 
 # fuck unicode
-export LANG="C"  # was "en_US" - not avail on debian
-export LC_ALL="C"
+#export LANG="C"  # was "en_US" - not avail on debian
+#export LC_ALL="C"
 
 # disable use of C-s/C-1 for scroll lock
 tty > /dev/null && stty -ixon -ixoff
 
 # don't put duplicate lines in the history. See bash(1) for more options
-export HISTCONTROL=ignoredups
+export HISTCONTROL=ignoreboth
 # save more than default of 500
 export HISTSIZE=5000
 export HISTFILESIZE=5000
+# save history after every command
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+shopt -s histappend
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -27,6 +30,8 @@ shopt -s checkwinsize
 
 # check for xterm
 `type x-terminal-emulator &> /dev/null` && [ -n "$DISPLAY" ] && IS_XTERM=true
+# check for Mac OS X
+[[ "$OSTYPE" == "darwin"* ]] && IS_OSX=true
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
@@ -41,7 +46,7 @@ fi
 #  whereas PS1 determines the appearance of the prompt itself
 case "$TERM" in
 xterm*|rxvt*)
-    PROMPT_COMMAND='echo -ne "\033]0;${USER/matthew_white/}@${HOSTNAME/matthew-white.local/}: ${PWD/$HOME/~}\007"'
+    export TITLE_PROMPT='echo -ne "\033]0;${USER/matthew_white/}@${HOSTNAME/matthew-white.local/}: ${PWD/$HOME/~}\007"'
     ;;
 *)
     ;;
@@ -50,8 +55,16 @@ esac
 # function to allow title to be set manually
 title() {
   TITLE=$*;
-  export PROMPT_COMMAND='echo -ne "\033]0;$TITLE\007"'
+  export TITLE_PROMPT='echo -ne "\033]0;$TITLE\007"'
 }
+
+# eval allows us to defer evaluation of $TITLE_PROMPT
+PROMPT_COMMAND="eval \$TITLE_PROMPT;$PROMPT_COMMAND"
+
+# this is to prevent mc from hanging for 10 seconds at startup
+if [ -n "$MC_TMPDIR" ]; then
+  PROMPT_COMMAND=
+fi
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -64,7 +77,7 @@ title() {
 #fi
 
 #if [ "$TERM" != "dumb" ]; then
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [ -n "$IS_OSX" ]; then
   # changes from OSX default: change dir from blue(e) to cyan(g)
   export LSCOLORS="gxfxcxdxbxegedabagacad"
 elif [ -e "$HOME/.dircolors" ]; then
@@ -83,8 +96,8 @@ alias dir='ls -l -p -G'
 alias l='dir -A'
 alias dira='dir -A'
 
-# find syntax is a bit too verbose
-alias ff='find . -iname'
+# find syntax is a bit too verbose - iname matches name w/o path; ipath whole path
+alias ff='find . -ipath'
 
 # create alias for aptitude
 alias apt='aptitude'
@@ -94,8 +107,6 @@ if [ -n "$IS_XTERM" ]; then
   disownvim() { x-terminal-emulator -e vim $* & disown; }
   alias vim='disownvim'
 fi
-# separate command for starting vim in insert mode
-alias vimi='vim -c startinsert'
 # similarly for scite
 disownscite() { scite $* & disown; }
 alias scite='disownscite'
@@ -118,7 +129,15 @@ alias man='vman'
 #alias scat='pygmentize-2.7 -f terminal --'
 # provided by source-highlight package
 alias vless='/usr/share/vim/vimcurrent/macros/less.sh'
-alias au='ag --color --pager "less -FXr"'
+alias au='ag --color --pager "less -EFXr"'
+alias aq='au -Q'
+
+# in place sed - different syntax for GNU vs. BSD (Mac)
+if [ -n "$IS_OSX" ]; then
+  alias sedi="sed -i '' -e"
+else
+  alias sedi="sed -i -e"
+fi
 
 # simple HTTP server
 fileserver() {
@@ -128,7 +147,7 @@ alias server='fileserver'
 
 # if bash completion script has already run, BASH_COMPLETION will be set readonly
 if (unset BASH_COMPLETION 2> /dev/null) then
-  if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [ -n "$IS_OSX" ]; then
     BASH_COMPLETION=$(brew --prefix)/etc/bash_completion
   else
     BASH_COMPLETION=/etc/bash_completion
@@ -160,6 +179,6 @@ else
   export PS1="\n\[\033[0;37;0;45m\]${PS1::-1}\[\033[m\] "
 fi
 
-if [ -f ~/.airbnbrc ]; then
-  source $HOME/.airbnbrc
+if [ -f ~/.localrc ]; then
+  source $HOME/.localrc
 fi
