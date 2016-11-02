@@ -16,10 +16,12 @@ export INPUTRC=$HOME/.inputrc
 tty > /dev/null && stty -ixon -ixoff
 
 # don't put duplicate lines in the history. See bash(1) for more options
-export HISTCONTROL=ignoreboth
+HISTCONTROL=ignoreboth
 # save more than default of 500
-export HISTSIZE=5000
-export HISTFILESIZE=5000
+HISTSIZE=20000
+HISTFILESIZE=20000
+# don't use default history file name so it is less likely to get wiped out
+#HISTFILE=$HOME/.bash_hist
 # save history after every command
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 shopt -s histappend
@@ -41,7 +43,7 @@ shopt -s checkwinsize
 #  whereas PS1 determines the appearance of the prompt itself
 case "$TERM" in
 xterm*|rxvt*)
-    export TITLE_PROMPT='echo -ne "\033]0;${USER/matthew_white/}@${HOSTNAME/matthew-white.local/}: ${PWD/$HOME/~}\007"'
+    TITLE_PROMPT='echo -ne "\033]0;${USER/matthew_white/}@${HOSTNAME/matthew-white.local/}: ${PWD/$HOME/~}\007"'
     ;;
 *)
     ;;
@@ -50,7 +52,7 @@ esac
 # function to allow title to be set manually
 title() {
   TITLE=$*;
-  export TITLE_PROMPT='echo -ne "\033]0;$TITLE\007"'
+  TITLE_PROMPT='echo -ne "\033]0;$TITLE\007"'
 }
 
 # eval allows us to defer evaluation of $TITLE_PROMPT
@@ -89,14 +91,32 @@ alias dira='dir -A'
 alias ff='find . -iname'
 alias fp='find . -ipath'
 
-# create alias for aptitude
-alias apt='aptitude'
+# run command in a new shell tab
+newtab() {
+  if [ -n "$TMUX" ]; then
+    tmux new-window $*
+  elif [ -n "$IS_OSX" ]; then
+    osascript 2>/dev/null <<-END
+      tell application "iTerm"
+        tell the current terminal
+          launch session "Default Session"
+          tell the current session
+            write text " cd $PWD; exec $*"
+          end tell
+       end tell
+     end tell
+END
+  elif [ -n "$IS_XTERM" ]; then
+    x-terminal-emulator -e $* & disown;
+  else
+    $*
+  fi
+}
+
 # try this: always open vim in new window (if running under xterm)
 #  disown suppresses exit notification
-if [ -n "$IS_XTERM" ]; then
-  disownvim() { x-terminal-emulator -e vim $* & disown; }
-  alias vim='disownvim'
-fi
+disownvim() { newtab command vim $*; }
+alias vim='disownvim'
 # similarly for scite
 disownscite() { scite $* &> /dev/null & disown; }
 alias scite='disownscite'
@@ -105,13 +125,13 @@ alias scite='disownscite'
 # the script checks to make sure the man page exists before starting vim
 # Note the "` `" around the calls to apropos - more bash insanity
 vman() {
-   if [ $# -eq 0 ]; then
-     /usr/bin/man
-   elif [ -n "`apropos -e $*`" ] || [ -n "`apropos $*`" ]; then
-     /usr/bin/man $* | col -b | /usr/bin/vim -R -c "set ft=man nomod nolist noim noma title titlestring=man\ $*" -
-   else
-     /usr/bin/man $*
-   fi
+  if [ $# -eq 0 ]; then
+    /usr/bin/man
+  elif [ -n "`apropos -e $*`" ] || [ -n "`apropos $*`" ]; then
+    /usr/bin/man $* | col -b | /usr/bin/vim -R -c "set ft=man nomod nolist noim noma title titlestring=man\ $*" -
+  else
+    /usr/bin/man $*
+  fi
 }
 alias man='vman'
 
@@ -121,6 +141,9 @@ alias man='vman'
 alias vless='/usr/share/vim/vimcurrent/macros/less.sh'
 alias au='ag --color --pager "less -EFXr"'
 alias aq='au -Q'
+# Use ag by default to supply file list for fuzzy file finder
+export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_OPTS="--multi"
 
 # in place sed - different syntax for GNU vs. BSD (Mac)
 if [ -n "$IS_OSX" ]; then
@@ -162,13 +185,14 @@ sshrc() {
 # prompt appearance - override in .localrc if desired
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
   # ssh session: add purple background and leading newline to existing prompt
-  export PS1="\n\[\033[0;37;0;45m\]${PS1::-1}\[\033[m\] "
+  #PS1="${PS1:-\u@\h:\w> }"
+  PS1="\n\[\033[0;37;0;45m\]${PS1::-1}\[\033[m\] "
 elif [[ $EUID -eq 0 ]]; then
   # root: full prompt, red
-  export PS1='\n\[\033[0;37;0;41m\]\u@\h:\w>\[\033[m\] '
+  PS1='\n\[\033[0;37;0;41m\]\u@\h:\w>\[\033[m\] '
 else
   # local user - path only, blue
-  export PS1='\n\[\033[0;37;0;44m\]:\w>\[\033[m\] '
+  PS1='\n\[\033[0;37;0;44m\]:\w>\[\033[m\] '
 fi
 
 if [ -f ~/.localrc ]; then
