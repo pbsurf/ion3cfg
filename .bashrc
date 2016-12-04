@@ -8,10 +8,6 @@
 # inputrc
 export INPUTRC=$HOME/.inputrc
 
-# fuck unicode
-#export LANG="C"  # was "en_US" - not avail on debian
-#export LC_ALL="C"
-
 # disable use of C-s/C-1 for scroll lock
 tty > /dev/null && stty -ixon -ixoff
 
@@ -77,8 +73,8 @@ if [ -n "$IS_OSX" ]; then
   alias ls='ls -G'
   alias dir='ls -l -p -G'
 else
-  alias ls='ls --color=auto'
-  alias dir='ls --format=long --group-directories-first -p -G'
+  alias ls='LC_COLLATE=C ls --color=auto'
+  alias dir='LC_COLLATE=C ls --format=long --group-directories-first -p -G'
 fi
 
 # some more ls aliases
@@ -90,6 +86,11 @@ alias dira='dir -A'
 # find syntax is a bit too verbose - iname matches name w/o path; ipath whole path
 alias ff='find . -iname'
 alias fp='find . -ipath'
+
+# create alias for aptitude; debian now has an executable called apt too, but aptitude search is better
+alias apt='aptitude'
+# sort apt search results by popularity - wget -O - http://popcon.debian.org/by_inst.gz | gunzip -c > popcon
+popcon() { aptitude search -F %p $* | grep -Fwf - /var/opt/popcon | less -EFXr; }
 
 # run command in a new shell tab
 newtab() {
@@ -115,7 +116,7 @@ END
 
 # try this: always open vim in new window (if running under xterm)
 #  disown suppresses exit notification
-disownvim() { newtab command vim $*; }
+disownvim() { newtab "vim" $*; }
 alias vim='disownvim'
 # similarly for scite
 disownscite() { scite $* &> /dev/null & disown; }
@@ -128,7 +129,7 @@ vman() {
   if [ $# -eq 0 ]; then
     /usr/bin/man
   elif [ -n "`apropos -e $*`" ] || [ -n "`apropos $*`" ]; then
-    /usr/bin/man $* | col -b | /usr/bin/vim -R -c "set ft=man nomod nolist noim noma title titlestring=man\ $*" -
+    /usr/bin/man $* | col -b | "vim" -R -c "set ft=man nomod nolist noim noma title titlestring=man\ $*" -
   else
     /usr/bin/man $*
   fi
@@ -144,6 +145,9 @@ alias aq='au -Q'
 # Use ag by default to supply file list for fuzzy file finder
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS="--multi"
+
+# python
+export PYTHONSTARTUP=~/.config/.pystartup
 
 # in place sed - different syntax for GNU vs. BSD (Mac)
 if [ -n "$IS_OSX" ]; then
