@@ -30,6 +30,14 @@ vnoremap <S-Tab> ^0 <
 map <silent> <F5> :setlocal invspell<CR>
 inoremap <silent> <F5> <ESC> :setlocal invspell<CR>a
 
+" Provide fuzzy file search
+set rtp+=/usr/local/opt/fzf
+
+" Use ag for grep
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
+
 " Case insensitive search unless uppercase char typed
 set ignorecase smartcase
 " Incremental searching
@@ -58,6 +66,9 @@ set directory=$TEMP,$TMP,~/tmp,/tmp,$VIM,.
 set history=50  " keep 50 lines of command line history
 set ruler       " show the cursor position all the time
 set showcmd     " display incomplete commands
+
+" always show status line so we can see filename
+set laststatus=2
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -118,46 +129,5 @@ command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
     \ | wincmd p | diffthis
 " End vimrc_example.vim
 
-" Key mappings, settings, etc. for Windows behavior
-"source $VIMRUNTIME/mswin.vim
-"behave mswin  -- Included in mswin.vim
-
-" mswin.vim seems to map C-Z, C-Y correctly to undo/redo, but not the
-" clipboard commands.  This lets me select text with the mouse and use C-C, C-X
-"vmap <C-c> y<Esc>i
-"vmap <C-x> d<Esc>i
-" this lets me paste with C-V in insert mode
-"imap <C-v> <Esc>pa
 " use system clipboard - doesn't seem to work right, but Shift-Ins works, so no problem
 "set clipboard=unnamed
-
-if has('win32')
-  set diffexpr=MyDiff()
-  function MyDiff()
-    let opt = '-a --binary '
-    if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-    if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-    let arg1 = v:fname_in
-    if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-    let arg2 = v:fname_new
-    if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-    let arg3 = v:fname_out
-    if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-    let eq = ''
-    if $VIMRUNTIME =~ ' '
-      if &sh =~ '\<cmd'
-        let cmd = '""' . $VIMRUNTIME . '\diff"'
-        let eq = '"'
-      else
-        let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-      endif
-    else
-      let cmd = $VIMRUNTIME . '\diff'
-    endif
-    silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-  endfunction
-endif
-
-" Start in insert mode
-":startinsert
-
