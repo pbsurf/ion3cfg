@@ -2,6 +2,8 @@
 
 " no attempt at vi compatibility
 set nocompatible
+" set location for viminfo
+set viminfo+=n~/.vim/viminfo
 set gfn=Dina\ 8,Courier\ New\ 9
 set guioptions+=b
 set tabstop=2

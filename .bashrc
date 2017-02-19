@@ -63,8 +63,8 @@ fi
 if [ -n "$IS_OSX" ]; then
   # changes from OSX default: change dir from blue(e) to cyan(g)
   export LSCOLORS="gxfxcxdxbxegedabagacad"
-elif [ -e "$HOME/.dircolors" ]; then
-  eval "`dircolors -b $HOME/.dircolors`"
+elif [ -e "$HOME/.config/dircolors" ]; then
+  eval "`dircolors -b $HOME/.config/dircolors`"
 else
   eval "`dircolors -b`"
 fi
@@ -145,9 +145,11 @@ alias aq='au -Q'
 # Use ag by default to supply file list for fuzzy file finder
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS="--multi"
+# fzf -> vim, iff any files choosen
+fzv() { hits=`fzf`; [ -n "$hits" ] && vim $hits; }
 
 # python
-export PYTHONSTARTUP=~/.config/.pystartup
+export PYTHONSTARTUP=~/.config/pystartup
 
 # in place sed - different syntax for GNU vs. BSD (Mac)
 if [ -n "$IS_OSX" ]; then

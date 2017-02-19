@@ -4,8 +4,10 @@ xrandr --addmode Virtual1 force1920x1080
 xrandr --output Virtual1 --mode force1920x1080
 # unmute PCM audio source and set to max volume; master volume is controlled by keyboard
 amixer sset PCM 100 unmute
+# load Xresources
+xrdb -merge ~/.config/X11/Xresources
 # remap some keys
-xmodmap $HOME/.Xmodmap
+xmodmap $HOME/.config/Xmodmap
 # path to my fonts
 xset +fp $HOME/.fonts
 # for clipboard sync

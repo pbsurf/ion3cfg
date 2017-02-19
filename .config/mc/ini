@@ -102,6 +102,8 @@ ignore_ftp_chattr_errors=true
 editor_drop_selection_on_copy=1
 editor_stop_format_chars=-+*\\,.;:&>
 
+editor_state_full_filename=1
+
 [Layout]
 message_visible=1
 keybar_visible=1
@@ -156,7 +158,7 @@ panel_display_codepage=Other_8_bit
 [Misc]
 ftpfs_password=anonymous@
 ftp_proxy_host=gate
-display_codepage=ASCII
+display_codepage=UTF-8
 ftp_codepage=Other_8_bit
 
 source_codepage=Other_8_bit
@@ -197,6 +199,8 @@ quick_search_mode=2
 select_flags=6
 
 simple_swap=false
+
+panel_scroll_center=false
 
 [Panelize]
 Find *.orig after patching=find . -name \\*.orig -print
