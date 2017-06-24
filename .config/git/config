@@ -24,7 +24,7 @@
   ui = auto
 [core]
   editor = vim
-  excludesfile = ~/.gitignore_global
+  excludesfile = ~/.config/git/ignore
   precomposeunicode = true
 [push]
   default = current
@@ -33,4 +33,4 @@
 [rerere]
   enabled = 1
 [include]
-  path = ~/.gitconfig_local
+  path = ~/.config/git/local
