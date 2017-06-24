@@ -1,7 +1,8 @@
-# modeline obtainined from working VMware 1920x1080 using `xvidtune -show`; another approach is `cvt 1920 1080 60`
-xrandr --newmode "force1920x1080"  152.77   1920 1970 2020 2070   1080 1130 1180 1230 -hsync +vsync
-xrandr --addmode Virtual1 force1920x1080
-xrandr --output Virtual1 --mode force1920x1080
+# modeline obtainined from working VMware "fit guest to fullscreen" using `xvidtune -show`
+xrandr --newmode "force2560x1440"   258.53   2560 2610 2660 2710   1440 1490 1540 1590 -hsync +vsync
+xrandr --addmode Virtual1 force2560x1440
+xrandr --output Virtual1 --mode force2560x1440
+xrandr --dpi 144
 # unmute PCM audio source and set to max volume; master volume is controlled by keyboard
 amixer sset PCM 100 unmute
 # remap some keys

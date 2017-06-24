@@ -1,8 +1,14 @@
-Xft.dpi: 96.0
-!Xft.antialias: 0
-!Xft.hinting: 1
-!Xft.hintstyle: hintfull
-!Xft.rgba: none
+! these should match fontconfig settings - needed for some apps (e.g. GTK apps like scite)
+Xft.dpi: 144
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+
+! there is also URxvt.lineSpace, but seems only positive values are accepted
+URxvt.letterSpace: -2
 
 !Xcursor.theme: flatcursor
 
@@ -23,7 +29,7 @@ URxvt*scrollTtyKeypress: True
 Rxvt.background: Black
 Rxvt.foreground: White
 Rxvt.font: -xos4-termina-medium-r-normal--12-120-72-72-c-60-ibm-cp437
-URxvt.font: -xos4-termina-medium-r-normal--12-120-72-72-c-60-iso10646-1
+URxvt.font: xft:monospace:pixelsize=16
 URxvt.boldFont:
 Rxvt.scrollBar_right: True
 Rxvt.saveLines: 5000
