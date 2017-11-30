@@ -9,6 +9,8 @@ set guioptions+=b
 set tabstop=2
 set shiftwidth=2
 set expandtab
+" have vim set xterm title
+set title
 colorscheme vc
 " Switch syntax highlighting on
 syntax on
