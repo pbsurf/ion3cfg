@@ -147,6 +147,8 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS="--multi"
 # fzf -> vim, iff any files choosen
 fzv() { hits=`fzf`; [ -n "$hits" ] && vim $hits; }
+# fzf with preview pane, showing first $1 lines of current file (default is 100 lines)
+fzp() { fzf --preview "head -${1:-100} {}"; }
 
 # python
 export PYTHONSTARTUP=~/.config/pystartup

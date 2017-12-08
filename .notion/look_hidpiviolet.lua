@@ -75,14 +75,6 @@ de.defstyle("input-menu", {
     padding_pixels = 0,
 })
 
-
-de.defstyle("frame", {
-    shadow_pixels = 1,
-    highlight_pixels = 1,
-    padding_pixels = 0,
-    border_sides = "all",
-})
-
 --dopath("lookcommon_clean")
 -- Common settings for the "clean" styles
 
@@ -96,13 +88,22 @@ de.defstyle("frame", {
         -- For user scripts
         padding_colour = "#009010",
     }),
-    padding_pixels = 1,
+    -- moved from look_newviolet frame style
+    shadow_pixels = 1,
+    highlight_pixels = 1,
+    padding_pixels = 0,
+    border_sides = "all",
+    spacing = 0
 })
 
 de.defstyle("frame-tiled", {
     shadow_pixels = 0,
     highlight_pixels = 0,
     spacing = 1,
+    -- no border or padding on sides, so that mouse input (esp. scroll wheel) at screen edge goes to
+    --  application and not notion (note that there is still the problem with VMware grabbing cursor at edge)
+    padding_pixels = 0,
+    border_sides = "tb",
 })
 
 --de.defstyle("frame-tiled-alt", {

@@ -1,5 +1,6 @@
 [ui]
 username=mwhite
+editor = nano
 merge = internal:merge
 paginate = never
 interface = curses
