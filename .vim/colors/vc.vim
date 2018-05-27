@@ -31,3 +31,4 @@ hi Visual gui=NONE guifg=White guibg=DarkBlue
 "hi Ignore
 "hi Error
 "hi Todo
+hi Directory    gui=NONE  guifg=Blue  guibg=NONE  ctermfg=14
