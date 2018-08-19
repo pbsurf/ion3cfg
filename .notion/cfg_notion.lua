@@ -93,14 +93,23 @@ dopath("cfg_defaults")
 --
 -- Common customisations
 --
+-- Note that you can use Session->Restart to apply changes made here without having to close any windows
 
 dopath("cfg_mouse")
 
 defbindings("WScreen", {
-    -- use Meta+Tab to cycle through workspaces since I use mouse to switch focus within workspace
+    -- use Meta+Tab to for focuslist, which cycles through windows (not workspaces) in most recently used
+    --  order; note that ioncore.goto_previous() will only toggle between two regions, whereas focuslist
+    --- gives us true Alt+Tab cycling behavior
+    -- Use 'focuslist_' to exclude windows demanding attention
+    -- 'windowlist' and 'workspacelist' give fixed, alphabetical lists of windows and workspaces
+    bdoc("Go to first region demanding attention or previously active one."),
+    kpress(META.."Tab", "mod_menu.grabmenu(_, _sub, 'focuslist')"),
+
+    -- use Meta+Q/W to cycle through workspaces in fixed order
     bdoc("Switch to next/previous object within current screen."),
-    kpress(META.."Tab", "WScreen.switch_next(_)"),
-    kpress(META.."Shift+Tab", "WScreen.switch_prev(_)"),
+    kpress(META.."W", "WScreen.switch_next(_)"),  -- was Tab
+    kpress(META.."Q", "WScreen.switch_prev(_)"),  -- was Shift+Tab
 
     -- Provide another shortcut for creating workspace?  Rare action, so don't bother for now
     --bdoc("Create a new workspace of chosen default type."),
@@ -109,7 +118,7 @@ defbindings("WScreen", {
     -- Uncommenting the following lines should get you plain-old-menus instead of query-menus.
     --kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
 
-    -- Meta+comma/period replace previous role of Meta+Tab
+    -- Meta+comma/period replace previous role of Meta+Tab (i.e., circulate focus within a workspace)
     bdoc("Circulate focus."),
     kpress(META.."comma", "ioncore.goto_next(_chld, 'right')", "_chld:non-nil"),
     kpress(META.."period", "ioncore.goto_next(_chld, 'left')", "_chld:non-nil"),
