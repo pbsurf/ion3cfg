@@ -39,11 +39,15 @@ shopt -s checkwinsize
 #  whereas PS1 determines the appearance of the prompt itself
 case "$TERM" in
 xterm*|rxvt*)
-    TITLE_PROMPT='echo -ne "\033]0;${USER/matthew_white/}@${HOSTNAME/matthew-white.local/}: ${PWD/$HOME/~}\007"'
+    TITLE_PROMPT='echo -ne "\033]0;${USER/$DEFAULT_USER/}@${HOSTNAME/$DEFAULT_HOST/}: ${PWD/$HOME/\~}\007"'
     ;;
 *)
     ;;
 esac
+
+# these can be overridden in .localrc as needed
+DEFAULT_USER=mwhite
+DEFAULT_HOST=deb77
 
 # function to allow title to be set manually
 title() {

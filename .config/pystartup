@@ -2,8 +2,8 @@
 # interactive interpreter. Requires Python 2.0+, readline.  Consider using
 # IPython which has history, completion, highlighting, and much more
 #
-# Store the file in ~/.pystartup, and set an environment variable to point
-# to it:  "export PYTHONSTARTUP=~/.config/.pystartup" in bash.
+# Set PYTHONSTARTUP to the path of this file:
+#   "export PYTHONSTARTUP=~/.config/pystartup" in .bashrc
 
 import atexit
 import os
@@ -15,11 +15,14 @@ readline.parse_and_bind('tab: complete')
 historyPath = os.path.expanduser("~/.config/.pyhistory")
 
 if os.path.exists(historyPath):
-    readline.read_history_file(historyPath)
+  readline.read_history_file(historyPath)
 
 def save_history(historyPath=historyPath):
-    import readline
-    readline.write_history_file(historyPath)
+  import readline
+  readline.write_history_file(historyPath)
+
+# set terminal title
+print("\x1B]0;%s (%s)\x07" % ('Python', str.replace(os.getcwd(), os.getenv('HOME', '\0'), '~', 1)))
 
 atexit.register(save_history)
 del os, atexit, readline, rlcompleter, save_history, historyPath

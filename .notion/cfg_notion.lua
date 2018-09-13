@@ -98,18 +98,18 @@ dopath("cfg_defaults")
 dopath("cfg_mouse")
 
 defbindings("WScreen", {
-    -- use Meta+Tab to for focuslist, which cycles through windows (not workspaces) in most recently used
+    -- use Alt+Tab for focuslist, which cycles through windows (not workspaces) in most recently used
     --  order; note that ioncore.goto_previous() will only toggle between two regions, whereas focuslist
     --- gives us true Alt+Tab cycling behavior
     -- Use 'focuslist_' to exclude windows demanding attention
     -- 'windowlist' and 'workspacelist' give fixed, alphabetical lists of windows and workspaces
     bdoc("Go to first region demanding attention or previously active one."),
-    kpress(META.."Tab", "mod_menu.grabmenu(_, _sub, 'focuslist')"),
+    kpress("Mod1+Tab", "mod_menu.grabmenu(_, _sub, 'focuslist')"),
 
     -- use Meta+Q/W to cycle through workspaces in fixed order
     bdoc("Switch to next/previous object within current screen."),
-    kpress(META.."W", "WScreen.switch_next(_)"),  -- was Tab
-    kpress(META.."Q", "WScreen.switch_prev(_)"),  -- was Shift+Tab
+    kpress(META.."Tab", "WScreen.switch_next(_)"),
+    kpress(META.."Shift+Tab", "WScreen.switch_prev(_)"),
 
     -- Provide another shortcut for creating workspace?  Rare action, so don't bother for now
     --bdoc("Create a new workspace of chosen default type."),
