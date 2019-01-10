@@ -24,3 +24,6 @@ status.removed = red
 status.deleted = cyan
 status.unknown = magenta
 status.ignored = blue
+
+[subrepos]
+git:allowed = true
