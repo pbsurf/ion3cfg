@@ -26,6 +26,12 @@
   editor = vim
   excludesfile = ~/.config/git/ignore
   precomposeunicode = true
+# convert CRLF to LF when committing, but never convert LF to CRLF (e.g. on checkout); this is mainly because
+#  we use .editorconfig to force VS to use LF, since mercurial does not support EOL conversion w/o extension
+  autocrlf = input
+# getting color when piping to pager is difficult, and don't want to use color=always, since we may want to
+#  pipe to file, so don't disable git's paging completely
+#  pager =
 [push]
   default = current
 [fetch]
