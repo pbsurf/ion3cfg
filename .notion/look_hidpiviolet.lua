@@ -120,60 +120,20 @@ de.defstyle("frame-transient", {
     padding_pixels = 0,
 })
 
+-- previously we cut and paste this file here - do that again if any problems
+dopath("lookcommon_clean_tab")
 
-de.defstyle("actnotify", {
-    shadow_colour = "#c04040",
-    highlight_colour = "#c04040",
-    background_colour = "#901010",
-    foreground_colour = "#eeeeee",
-})
-
-de.defstyle("tab", {
-    de.substyle("*-*-*-unselected-activity", {
-        shadow_colour = "#c04040",
-        highlight_colour = "#c04040",
-        background_colour = "#901010",
-        foreground_colour = "#eeeeee",
-    }),
-
-    de.substyle("*-*-*-selected-activity", {
-        shadow_colour = "#c04040",
-        highlight_colour = "#c04040",
-        background_colour = "#b03030",
-        foreground_colour = "#ffffff",
-    }),
-
-    de.substyle("*-*-*-tabnumber", {
-        background_colour = "black",
-        foreground_colour = "green",
-    }),
-})
-
-de.defstyle("tab-frame", {
-    spacing = 1,
-})
-
-de.defstyle("tab-frame-floating", {
-    spacing = 0,
-})
-
-de.defstyle("tab-menuentry", {
-    text_align = "left",
-})
-
-de.defstyle("tab-menuentry-big", {
-    font = "-*-helvetica-medium-r-normal-*-24-*-*-*-*-*-*-*",
-    padding_pixels = 7,
-})
-
-
-de.defstyle("stdisp", {
+-- Status bar apperance - need to set monospace font
+--dopath("lookcommon_clean_stdisp")
+de.defstyle("stdisp-statusbar", {
     shadow_pixels = 0,
     highlight_pixels = 0,
     text_align = "left",
     background_colour = "#000000",
     foreground_colour = "grey",
-    font = "-*-lucidatypewriter-medium-r-normal-*-18-*-*-*-*-*-*-*",
+    font = "xft:DejaVu Sans Mono:style=Bold:size=10",
+    --xlsfonts -fn <name> to look up these old X logical font names
+    --font = "-*-lucidatypewriter-medium-r-normal-*-18-*-*-*-*-*-*-*",  -- doesn't seem to work anymore
 
     de.substyle("important", {
         foreground_colour = "green",

@@ -8,7 +8,7 @@ Xft.antialias: 1
 Xft.rgba: rgb
 
 ! there is also URxvt.lineSpace, but seems only positive values are accepted
-URxvt.letterSpace: -2
+URxvt.letterSpace: -1
 
 !Xcursor.theme: flatcursor
 
