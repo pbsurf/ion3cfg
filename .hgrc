@@ -11,6 +11,8 @@ interface = curses
 rebase=
 histedit=
 shelve=
+convert=
+#hggit=/home/mwhite/temp/hg-git/hggit
 
 [alias]
 l = log --limit 10

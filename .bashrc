@@ -17,10 +17,13 @@ HISTCONTROL=ignoreboth
 HISTSIZE=20000
 HISTFILESIZE=20000
 # don't use default history file name so it is less likely to get wiped out
-#HISTFILE=$HOME/.bash_hist
+HISTFILE=$HOME/.bash_hist
 # save history after every command
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 shopt -s histappend
+
+# we don't need history for `less`
+export LESSHISTFILE=-
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -94,12 +97,12 @@ alias fp='find . -ipath'
 # create alias for aptitude; debian now has an executable called apt too, but aptitude search is better
 alias apt='aptitude'
 # sort apt search results by popularity - wget -O - http://popcon.debian.org/by_inst.gz | gunzip -c > popcon
-popcon() { aptitude search -F %p $* | grep -Fwf - /var/opt/popcon | less -EFXr; }
+popcon() { aptitude search -F %p "$@" | grep -Fwf - /var/opt/popcon | less -EFXr; }
 
 # run command in a new shell tab
 newtab() {
   if [ -n "$TMUX" ]; then
-    tmux new-window $*
+    tmux new-window "$@"
   elif [ -n "$IS_OSX" ]; then
     osascript 2>/dev/null <<-END
       tell application "iTerm"
@@ -112,7 +115,7 @@ newtab() {
      end tell
 END
   elif [ -n "$IS_XTERM" ]; then
-    x-terminal-emulator -e $* & disown;
+    x-terminal-emulator -e "$@" & disown;
   else
     $*
   fi
@@ -120,10 +123,10 @@ END
 
 # try this: always open vim in new window (if running under xterm)
 #  disown suppresses exit notification
-disownvim() { newtab "vim" $*; }
+disownvim() { newtab "vim" "$@"; }
 alias vim='disownvim'
 # similarly for scite
-disownscite() { scite $* &> /dev/null & disown; }
+disownscite() { scite "$@" &> /dev/null & disown; }
 alias scite='disownscite'
 
 # Replace default man viewer with vim
@@ -133,7 +136,7 @@ vman() {
   if [ $# -eq 0 ]; then
     /usr/bin/man
   elif [ -n "`apropos -e $*`" ] || [ -n "`apropos $*`" ]; then
-    /usr/bin/man $* | col -b | "vim" -R -c "set ft=man nomod nolist noim noma title titlestring=man\ $*" -
+    /usr/bin/man $* | col -b | "vim" -R -c "set ft=man nomod nolist noim noma title titlestring=man\ $*" -c "noremap q :q<CR>" -
   else
     /usr/bin/man $*
   fi
@@ -143,7 +146,7 @@ alias man='vman'
 # Syntax highlighting for cat and less
 #alias scat='pygmentize-2.7 -f terminal --'
 # provided by source-highlight package
-alias vless='/usr/share/vim/vimcurrent/macros/less.sh'
+alias vless='/usr/share/vim/vim74/macros/less.sh'
 alias au='ag --color --pager "less -EFXr"'
 alias aq='au -Q'
 # Use ag by default to supply file list for fuzzy file finder

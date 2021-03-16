@@ -16,6 +16,8 @@ colorscheme vc
 syntax on
 " this may be necessary for 256 color terminal
 "set t_Co=256
+" wrap around to previous/next line with arrow keys
+set whichwrap+=<,>,h,l,[,]
 "I always accidently hit the insert key...
 imap <Insert> <Delete>
 "Don't want middle button paste
@@ -33,6 +35,8 @@ vnoremap <S-Tab> ^0 <
 "Spell check toggle: F5
 map <silent> <F5> :setlocal invspell<CR>
 inoremap <silent> <F5> <ESC> :setlocal invspell<CR>a
+"make q key a no-op
+noremap q <Nop>
 
 " Provide fuzzy file search
 set rtp+=/usr/local/opt/fzf
