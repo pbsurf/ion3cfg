@@ -107,6 +107,8 @@ editor_state_full_filename=true
 safe_overwrite=false
 shadows=true
 
+filepos_max_saved_entries=1024
+
 [Layout]
 message_visible=true
 keybar_visible=true
@@ -161,7 +163,7 @@ panel_display_codepage=Other_8_bit
 [Misc]
 ftpfs_password=anonymous@
 ftp_proxy_host=gate
-display_codepage=ASCII
+display_codepage=UTF-8
 ftp_codepage=Other_8_bit
 
 source_codepage=Other_8_bit
@@ -183,6 +185,8 @@ rxvt-unicode=
 rxvt-unicode-256color=
 
 linux=
+
+rxvt-256color=
 
 [Panels]
 show_mini_info=true

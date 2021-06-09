@@ -30,3 +30,18 @@ def execfile(filepath, glbls=None, lcls=None):
 
 atexit.register(save_history)
 del os, atexit, readline, rlcompleter, save_history, historyPath
+
+# pretty printing + syntax highlighting ... need TERM=rxvt-256color (only one dash allowed)
+try:
+  from rich import themes
+  from rich.style import Style
+  themes.DEFAULT.styles['repr.str'] = Style(color="bright_green")  #bright_magenta
+  themes.DEFAULT.styles['repr.call'] = Style(color="white")
+  themes.DEFAULT.styles['repr.number'] = Style(color="bright_cyan")
+  themes.DEFAULT.styles['repr.attrib_name'] = Style(color="bright_yellow")
+
+  from rich import pretty
+  pretty.install()
+  del pretty, themes, Style
+except:
+  pass

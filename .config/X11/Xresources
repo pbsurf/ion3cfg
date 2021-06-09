@@ -35,3 +35,20 @@ Rxvt.scrollBar_right: True
 Rxvt.saveLines: 5000
 ! Ctrl+F to search scrollback in urxvt
 URxvt.searchable-scrollback: C-f
+
+! ISO 14755 mode is for entering characters via ASCII/unicode index (via Ctrl+Shift)
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+! Switch between light and dark modes - see unix.stackexchange.com/questions/232881
+! default colors can be changed w/ `*.color0: #ffffff`, etc. in this file
+! query colors like this:  echo -en "\033]4;4;?\033\\"
+XTerm*dynamicColors: true
+URxvt*dynamicColors: on
+! 11,10,12 = bg, fg, text colors; 4;0-15 = Xterm colors
+! default colors; dark BG ... normal xterm colors for 1=#ff0000, 4=#0000ff
+URxvt*keysym.Control-Shift-F5: command:\033]11;#000000\007\033]10;#ffffff\007\033]12;#ffffff\007\033]4;0;#000000\007\033]4;1;#cd0000\007\033]4;2;#008000\007\033]4;3;#808000\007\033]4;4;#0000cd\007\033]4;5;#800080\007\033]4;6;#008080\007\033]4;7;#c0c0c0\007\033]4;8;#808080\007\033]4;9;#ff0000\007\033]4;10;#00ff00\007\033]4;11;#ffff00\007\033]4;12;#0000ff\007\033]4;13;#ff00ff\007\033]4;14;#00ffff\007\033]4;15;#ffffff\007
+! light BG ... we could try bg = #dcdcdc, fg = #2c2c2c for slightly less contrast
+URxvt*keysym.Control-Shift-F6: command:\033]11;#ffffff\007\033]10;#000000\007\033]12;#000000\007\033]4;0;#ffffff\007\033]4;1;#ff0000\007\033]4;2;#00ff00\007\033]4;3;#ffff00\007\033]4;4;#00ffff\007\033]4;5;#800080\007\033]4;6;#008080\007\033]4;7;#808080\007\033]4;8;#c0c0c0\007\033]4;9;#ff0000\007\033]4;10;#008000\007\033]4;11;#808000\007\033]4;12;#00ffff\007\033]4;13;#ff00ff\007\033]4;14;#0000ff\007\033]4;15;#000000\007
+! this is an interesting muted color scheme - going to keep around to test drive
+URxvt*keysym.Control-Shift-F7: command:\033]11;#2c2c2c\007\033]10;#dcdcdc\007\033]12;#dcdcdc\007\033]4;0;#3f3f3f\007\033]4;1;#705050\007\033]4;2;#60b48a\007\033]4;3;#dfaf8f\007\033]4;4;#9ab8d7\007\033]4;5;#dc8cc3\007\033]4;6;#8cd0d3\007\033]4;7;#dcdcdc\007\033]4;8;#709080\007\033]4;9;#dca3a3\007\033]4;10;#72d5a3\007\033]4;11;#f0dfaf\007\033]4;12;#94bff3\007\033]4;13;#ec93d3\007\033]4;14;#93e0e3\007\033]4;15;#ffffff\007

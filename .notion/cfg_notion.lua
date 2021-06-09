@@ -153,7 +153,7 @@ defbindings("WMPlex.toplevel", {
     bdoc("Run a terminal emulator."),
     kpress(META.."C", "ioncore.exec_on(_, XTERM or 'x-terminal-emulator')"),
     kpress(META.."T", "ioncore.exec_on(_, XTERM or 'x-terminal-emulator')"),
-    --kpress("F2", nil),
+    kpress("F2", nil),
 
     bdoc("Query for command line to execute."),
     kpress(META.."R", "mod_query.query_exec(_)"),

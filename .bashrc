@@ -131,11 +131,11 @@ alias scite='disownscite'
 
 # Replace default man viewer with vim
 # the script checks to make sure the man page exists before starting vim
-# Note the "` `" around the calls to apropos - more bash insanity
+# previously used apropos but `man -w` seems to work better
 vman() {
   if [ $# -eq 0 ]; then
     /usr/bin/man
-  elif [ -n "`apropos -e $*`" ] || [ -n "`apropos $*`" ]; then
+  elif [ -n "`/usr/bin/man -w $*`" ]; then
     /usr/bin/man $* | col -b | "vim" -R -c "set ft=man nomod nolist noim noma title titlestring=man\ $*" -c "noremap q :q<CR>" -
   else
     /usr/bin/man $*
