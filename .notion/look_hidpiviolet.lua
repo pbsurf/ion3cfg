@@ -28,13 +28,15 @@ de.defstyle("*", {
     border_style = "elevated",
     border_sides = "tb",
 
-    font = "-*-helvetica-medium-r-normal-*-20-*-*-*-*-*-*-*",
+    --font = "-*-helvetica-bold-r-normal-*-25-*-*-*-*-*-*-*",
+    font = "xft:Tahoma:size=12",
     text_align = "center",
 })
 
 
 de.defstyle("tab", {
-    font = "-*-helvetica-medium-r-normal-*-18-*-*-*-*-*-*-*",
+    font = "xft:Tahoma:style=Bold:size=12",
+    --font = "-*-helvetica-medium-r-normal-*-18-*-*-*-*-*-*-*",
 
     de.substyle("active-selected", {
         highlight_colour = "#aaaacc",
@@ -173,7 +175,8 @@ de.defstyle("stdisp", {
     text_align = "left",
     background_colour = "#000000",
     foreground_colour = "grey",
-    font = "-*-lucidatypewriter-medium-r-normal-*-18-*-*-*-*-*-*-*",
+    --font = "-*-lucidatypewriter-medium-r-normal-*-18-*-*-*-*-*-*-*",
+    font = "xft:DejaVu Sans Mono:style=Bold:size=14",
 
     de.substyle("important", {
         foreground_colour = "green",
