@@ -29,6 +29,9 @@ TAB: menu-complete
 # set bell-style none
 set bell-style visible
 
+# bracketed paste prevents newlines pasted into terminal from running commands; on by default in readline 8.1+
+#set enable-bracketed-paste off
+
 # some defaults / modifications for the emacs mode
 $if mode=emacs
 

@@ -115,7 +115,9 @@ newtab() {
      end tell
 END
   elif [ -n "$IS_XTERM" ]; then
-    x-terminal-emulator -e "$@" & disown;
+    #x-terminal-emulator -e "$@" & disown;
+    # seems to be a problem with vim starting too fast and not redrawing after terminal window tiles
+    x-terminal-emulator -e sh -c "sleep 0.01 && $*" & disown;
   else
     $*
   fi

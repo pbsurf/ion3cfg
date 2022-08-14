@@ -11,6 +11,11 @@ import readline
 import rlcompleter
 
 readline.parse_and_bind('tab: complete')
+readline.parse_and_bind("set enable-bracketed-paste off")  # https://bugs.python.org/issue39820
+
+# deduplicating history:
+#lines = read_file(os.path.expanduser("~/.config/.pyhistory")).splitlines()
+#write_file("new.pyhistory", '\n'.join(unique(lines[::-1])[::-1]))
 
 historyPath = os.path.expanduser("~/.config/.pyhistory")
 

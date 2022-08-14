@@ -35,3 +35,5 @@
   enabled = 1
 [include]
   path = ~/.config/git/local
+[pull]
+  ff = only
