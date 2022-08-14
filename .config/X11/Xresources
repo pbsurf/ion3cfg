@@ -1,5 +1,5 @@
 ! these should match fontconfig settings - needed for some apps (e.g. GTK apps like scite)
-Xft.dpi: 144
+Xft.dpi: 192
 Xft.autohint: 0
 Xft.lcdfilter: lcddefault
 Xft.hintstyle: hintslight

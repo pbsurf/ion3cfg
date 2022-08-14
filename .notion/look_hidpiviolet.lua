@@ -29,13 +29,13 @@ de.defstyle("*", {
     border_sides = "tb",
 
     --font = "-*-helvetica-bold-r-normal-*-25-*-*-*-*-*-*-*",
-    font = "xft:Tahoma:size=12",
+    font = "xft:Tahoma:pixelsize=24",
     text_align = "center",
 })
 
 
 de.defstyle("tab", {
-    font = "xft:Tahoma:size=12",
+    font = "xft:Tahoma:pixelsize=24",
     --font = "xft:Tahoma:style=Bold:size=12",
     --font = "-*-helvetica-medium-r-normal-*-18-*-*-*-*-*-*-*",
 
@@ -136,7 +136,7 @@ de.defstyle("stdisp-statusbar", {
     foreground_colour = "grey",
     --xlsfonts -fn <name> to look up these old X logical font names
     --font = "-*-lucidatypewriter-medium-r-normal-*-18-*-*-*-*-*-*-*",
-    font = "xft:DejaVu Sans Mono:style=Bold:size=14",
+    font = "xft:DejaVu Sans Mono:style=Bold:pixelsize=24",
 
     de.substyle("important", {
         foreground_colour = "green",
