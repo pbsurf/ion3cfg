@@ -200,16 +200,17 @@ sshrc() {
 }
 
 # prompt appearance - override in .localrc if desired
+# Using », ❭, or ❯ instead of > prevents copy paste accidents overwriting files; set -o noclobber is an alternative
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
   # ssh session: add purple background and leading newline to existing prompt
   #PS1="${PS1:-\u@\h:\w> }"
   PS1="\n\[\033[0;37;0;45m\]${PS1::-1}\[\033[m\] "
 elif [[ $EUID -eq 0 ]]; then
   # root: full prompt, red
-  PS1='\n\[\033[0;37;0;41m\]\u@\h:\w>\[\033[m\] '
+  PS1='\n\[\033[0;37;0;41m\]\u@\h:\w❯\[\033[m\] '
 else
   # local user - path only, blue
-  PS1='\n\[\033[0;37;0;44m\]:\w>\[\033[m\] '
+  PS1='\n\[\033[0;37;0;44m\]:\w❯\[\033[m\] '
 fi
 
 if [ -f ~/.localrc ]; then

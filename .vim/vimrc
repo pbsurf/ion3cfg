@@ -56,7 +56,8 @@ set hlsearch
 hi Search cterm=NONE ctermfg=Black ctermbg=Yellow
 " use F2 to toggle line numbering
 nmap <f2> :set number! <CR>
-" use F3 to toggle word wrap
+" use F3 to toggle word wrap; linebreak to break on whitespace
+set linebreak
 set nowrap
 nmap <f3> :set wrap! <CR>
 
