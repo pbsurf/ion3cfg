@@ -188,9 +188,9 @@ if (unset BASH_COMPLETION 2> /dev/null) then
   fi
 fi
 # override and disable tilde expansion function in bash_completion
-_expand() {
-  return 0;
-}
+_expand() { return 0; }
+# accept all file extensions for sqlite3
+_sqlite3_fixed() { _init_completion || return; _filedir; } && complete -F _sqlite3_fixed sqlite3
 
 # upload dotfiles before sshing - only needs to be used on first connect
 sshrc() {

@@ -27,8 +27,8 @@ defbindings("WScreen", {
     --  of the screen, most of them do.)
     --mpress("Button4", "WScreen.switch_prev(_)"),
     --mpress("Button5", "WScreen.switch_next(_)"),
-    mpress(MOD1.."Button4", "WScreen.switch_prev(_)"),
-    mpress(MOD1.."Button5", "WScreen.switch_next(_)"),
+    --mpress(MOD1.."Button4", "WScreen.switch_prev(_)"),
+    --mpress(MOD1.."Button5", "WScreen.switch_next(_)"),
 
     -- When a WClientWin is set to fullscreen mode, the mouse
     -- can do little about it unless there happen to be gaps
@@ -75,8 +75,8 @@ defbindings("WFrame", {
     --mpress("Button4@border", "_:parent():switch_prev()"),
 
     -- MOD + wheel anywhere switches workspaces
-    mpress(MOD1.."Button4", "_:parent():switch_prev()"),
-    mpress(MOD1.."Button5", "_:parent():switch_next()"),
+    --mpress(MOD1.."Button4", "_:parent():switch_prev()"),
+    --mpress(MOD1.."Button5", "_:parent():switch_next()"),
 
     bdoc("Drag without aiming for a tab, using Mod1+Shift"),
     mdrag(MOD1.."Shift+Button1", "WFrame.p_tabdrag(_)"),

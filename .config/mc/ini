@@ -108,6 +108,7 @@ safe_overwrite=false
 shadows=true
 
 filepos_max_saved_entries=1024
+shell_directory_timeout=900
 
 [Layout]
 message_visible=true
@@ -189,6 +190,7 @@ linux=
 rxvt-256color=
 
 xterm=
+xterm-256color=
 
 [Panels]
 show_mini_info=true
@@ -217,5 +219,5 @@ panel_scroll_center=false
 
 [Panelize]
 Find *.orig after patching=find . -name \\*.orig -print
-Find SUID and SGID programs=find . \\( \\( -perm -04000 -a -perm +011 \\) -o \\( -perm -02000 -a -perm +01 \\) \\) -print
 Find rejects after patching=find . -name \\*.rej -print
+Find SUID and SGID programs=find . \\( \\( -perm -04000 -a -perm +011 \\) -o \\( -perm -02000 -a -perm +01 \\) \\) -print

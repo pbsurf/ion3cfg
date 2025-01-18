@@ -114,6 +114,9 @@ defbindings("WScreen", {
     -- Uncommenting the following lines should get you plain-old-menus instead of query-menus.
     --kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
 
+    -- remove Fn key binding(s)
+    kpress("F12", nil),
+
     -- Meta+comma/period replace previous role of Meta+Tab (i.e., circulate focus within a workspace)
     bdoc("Circulate focus."),
     kpress(META.."comma", "ioncore.goto_next(_chld, 'right')", "_chld:non-nil"),
