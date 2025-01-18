@@ -95,7 +95,7 @@ alias ff='find . -iname'
 alias fp='find . -ipath'
 
 # create alias for aptitude; debian now has an executable called apt too, but aptitude search is better
-alias apt='aptitude'
+command -v aptitude && alias apt='aptitude'
 # sort apt search results by popularity - wget -O - http://popcon.debian.org/by_inst.gz | gunzip -c > popcon
 popcon() { aptitude search -F %p "$@" | grep -Fwf - /var/opt/popcon | less -EFXr; }
 
