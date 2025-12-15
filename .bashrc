@@ -107,16 +107,25 @@ newtab() {
   if [ -n "$TMUX" ]; then
     tmux new-window "$@"
   elif [ -n "$IS_OSX" ]; then
-    osascript 2>/dev/null <<-END
-      tell application "iTerm"
-        tell the current terminal
-          launch session "Default Session"
-          tell the current session
-            write text " cd $PWD; exec $*"
-          end tell
-       end tell
-     end tell
-END
+    $*
+#    osascript 2>/dev/null <<-END
+#      tell application "Terminal"
+#          activate
+#          tell application "System Events" to keystroke "t" using command down
+#          repeat while contents of selected tab of window 1 starts with linefeed
+#              delay 0.01
+#          end repeat
+#          do script " cd $PWD; exec $*" in window 1
+#      end tell
+#END
+     # tell application "iTerm"
+     #   tell the current terminal
+     #     launch session "Default Session"
+     #     tell the current session
+     #       write text " cd $PWD; exec $*"
+     #     end tell
+     #  end tell
+     #end tell
   elif [ -n "$IS_XTERM" ]; then
     #x-terminal-emulator -e "$@" & disown;
     # seems to be a problem with vim starting too fast and not redrawing after terminal window tiles
