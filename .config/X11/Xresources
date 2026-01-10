@@ -35,7 +35,7 @@ URxvt.boldFont:
 Rxvt.scrollBar_right: True
 Rxvt.saveLines: 5000
 ! Ctrl+F to search scrollback in urxvt
-URxvt.searchable-scrollback: C-f
+URxvt.searchable-scrollback: C-M-f
 
 ! ISO 14755 mode is for entering characters via ASCII/unicode index (via Ctrl+Shift)
 URxvt.iso14755: false

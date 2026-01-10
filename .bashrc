@@ -11,9 +11,10 @@ export INPUTRC=$HOME/.inputrc
 # disable use of C-s/C-1 for scroll lock
 tty > /dev/null && stty -ixon -ixoff
 
-# don't put duplicate lines in the history. See bash(1) for more options
+# don't put consecutive duplicate lines in the history. See bash(1) for more options
 HISTCONTROL=ignoreboth
 # save more than default of 500
+# run this to remove non-consecutive duplicates: `tac ~/.bash_hist | awk '!x[$0]++' | tac > .bash_hist_dedup`
 HISTSIZE=20000
 HISTFILESIZE=20000
 # don't use default history file name so it is less likely to get wiped out
