@@ -96,8 +96,10 @@ alias ff='find . -iname'
 alias fp='find . -ipath'
 
 # create alias for aptitude; debian now has an executable called apt too, but aptitude search is better
-command -v aptitude && alias apt='aptitude'
+#command -v aptitude && alias apt='aptitude'
+export APT_PAGER=
 # sort apt search results by popularity - wget -O - http://popcon.debian.org/by_inst.gz | gunzip -c > popcon
+# example: `popcon '~deditor !~n^lib'`
 popcon() { aptitude search -F %p "$@" | grep -Fwf - /var/opt/popcon | less -EFXr; }
 
 # run command in a new shell tab
@@ -161,7 +163,12 @@ fzv() { hits=`fzf`; [ -n "$hits" ] && vim $hits; }
 fzp() { fzf --preview "head -${1:-100} {}"; }
 
 # python
-export PYTHONSTARTUP=~/.config/pystartup
+# PYTHON_HISTORY for python 3.13+
+export PYTHON_HISTORY=$HOME/.config/python_history
+#export PYTHON_BASIC_REPL=1  # use old REPL for readline
+if [ -e "$HOME/.config/pystartup" ]; then
+  export PYTHONSTARTUP=$HOME/.config/pystartup
+fi
 
 # in place sed - different syntax for GNU vs. BSD (Mac)
 if [ -n "$IS_OSX" ]; then

@@ -41,6 +41,10 @@ URxvt.searchable-scrollback: C-M-f
 URxvt.iso14755: false
 URxvt.iso14755_52: false
 
+! Now use Ctrl+Shift+C/V for copy and paste
+URxvt.keysym.C-S-C: eval:selection_to_clipboard
+URxvt.keysym.C-S-V: eval:paste_clipboard
+
 ! Switch between light and dark modes - see unix.stackexchange.com/questions/232881
 ! default colors can be changed w/ `*.color0: #ffffff`, etc. in this file
 ! query colors like this:  echo -en "\033]4;4;?\033\\"

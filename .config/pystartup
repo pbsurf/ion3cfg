@@ -5,26 +5,7 @@
 # Set PYTHONSTARTUP to the path of this file:
 #   "export PYTHONSTARTUP=~/.config/pystartup" in .bashrc
 
-import atexit
-import os
-import readline
-import rlcompleter
-
-readline.parse_and_bind('tab: complete')
-readline.parse_and_bind("set enable-bracketed-paste off")  # https://bugs.python.org/issue39820
-
-# deduplicating history:
-#lines = read_file(os.path.expanduser("~/.config/.pyhistory")).splitlines()
-#write_file("new.pyhistory", '\n'.join(unique(lines[::-1])[::-1]))
-
-historyPath = os.path.expanduser("~/.config/.pyhistory")
-
-if os.path.exists(historyPath):
-  readline.read_history_file(historyPath)
-
-def save_history(historyPath=historyPath):
-  import readline
-  readline.write_history_file(historyPath)
+import os, sys
 
 # set terminal title
 print("\x1B]0;%s (%s)\x07" % ('Python', str.replace(os.getcwd(), os.getenv('HOME', '\0'), '~', 1)))
@@ -33,20 +14,44 @@ def execfile(filepath, glbls=None, lcls=None):
   with open(filepath, 'rb') as file:
     exec(compile(file.read(), filepath, 'exec'), globals() if glbls is None else glbls, lcls)
 
-atexit.register(save_history)
-del os, atexit, readline, rlcompleter, save_history, historyPath
+def setup_readline():
+  import atexit
+  import readline
+  import rlcompleter
 
-# pretty printing + syntax highlighting ... need TERM=rxvt-256color (only one dash allowed)
-try:
-  from rich import themes
-  from rich.style import Style
-  themes.DEFAULT.styles['repr.str'] = Style(color="bright_green")  #bright_magenta
-  themes.DEFAULT.styles['repr.call'] = Style(color="white")
-  themes.DEFAULT.styles['repr.number'] = Style(color="bright_cyan")
-  themes.DEFAULT.styles['repr.attrib_name'] = Style(color="bright_yellow")
+  readline.parse_and_bind('tab: complete')
+  readline.parse_and_bind("set enable-bracketed-paste off")  # https://bugs.python.org/issue39820
 
-  from rich import pretty
-  pretty.install()
-  del pretty, themes, Style
-except:
-  pass
+  # deduplicating history:
+  #lines = read_file(os.path.expanduser("~/.config/.pyhistory")).splitlines()
+  #write_file("new.pyhistory", '\n'.join(unique(lines[::-1])[::-1]))
+
+  historyPath = os.path.expanduser("~/.config/.pyhistory")
+
+  if os.path.exists(historyPath):
+    readline.read_history_file(historyPath)
+
+  def save_history(historyPath=historyPath):
+    import readline
+    readline.write_history_file(historyPath)
+
+  atexit.register(save_history)
+
+  # pretty printing + syntax highlighting ... need TERM=rxvt-256color (only one dash allowed)
+  try:
+    from rich import themes
+    from rich.style import Style
+    themes.DEFAULT.styles['repr.str'] = Style(color="bright_green")  #bright_magenta
+    themes.DEFAULT.styles['repr.call'] = Style(color="white")
+    themes.DEFAULT.styles['repr.number'] = Style(color="bright_cyan")
+    themes.DEFAULT.styles['repr.attrib_name'] = Style(color="bright_yellow")
+
+    from rich import pretty
+    pretty.install()
+  except:
+    pass
+
+if sys.version_info < (3, 13) or os.environ.get("PYTHON_BASIC_REPL") == "1":
+ setup_readline()
+
+del os, sys, setup_readline
