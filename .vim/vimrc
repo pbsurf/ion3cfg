@@ -11,9 +11,11 @@ set shiftwidth=2
 set expandtab
 " have vim set xterm title
 set title
-colorscheme vc
 " Switch syntax highlighting on
-syntax on
+if has('syntax')
+  colorscheme vc
+  syntax on
+endif
 " this may be necessary for 256 color terminal
 "set t_Co=256
 " wrap around to previous/next line with arrow keys
@@ -85,6 +87,8 @@ map Q gq
 " always use the mouse
 set mouse=a
 
+if has('syntax')
+
 " Copied directly from vimrc_example
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -140,3 +144,5 @@ command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 
 " use system clipboard - doesn't seem to work right, but Shift-Ins works, so no problem
 "set clipboard=unnamed
+
+endif

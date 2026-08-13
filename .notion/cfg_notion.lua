@@ -154,8 +154,8 @@ defbindings("WFrame", {
 --Change ion3 bindings to use Windows Key and unmap Fn key binding
 defbindings("WMPlex.toplevel", {
     bdoc("Run a terminal emulator."),
-    kpress(META.."C", "ioncore.exec_on(_, XTERM or 'x-terminal-emulator')"),
-    kpress(META.."T", "ioncore.exec_on(_, XTERM or 'x-terminal-emulator')"),
+    kpress(META.."C", "ioncore.exec_on(_, XTERM or 'exec x-terminal-emulator')"),
+    kpress(META.."T", "ioncore.exec_on(_, XTERM or 'exec x-terminal-emulator')"),
     kpress("F2", nil),
 
     bdoc("Query for command line to execute."),
