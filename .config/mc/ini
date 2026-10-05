@@ -125,7 +125,7 @@ free_space=true
 
 horizontal_split=false
 vertical_equal=true
-left_panel_size=73
+left_panel_size=72
 horizontal_equal=true
 top_panel_size=51
 
@@ -191,6 +191,7 @@ rxvt-256color=
 
 xterm=
 xterm-256color=
+tmux-256color=
 
 [Panels]
 show_mini_info=true
@@ -218,6 +219,6 @@ simple_swap=false
 panel_scroll_center=false
 
 [Panelize]
-Find SUID and SGID programs=find . \\( \\( -perm -04000 -a -perm +011 \\) -o \\( -perm -02000 -a -perm +01 \\) \\) -print
 Find *.orig after patching=find . -name \\*.orig -print
+Find SUID and SGID programs=find . \\( \\( -perm -04000 -a -perm +011 \\) -o \\( -perm -02000 -a -perm +01 \\) \\) -print
 Find rejects after patching=find . -name \\*.rej -print

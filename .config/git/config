@@ -10,11 +10,12 @@
   pullu = pull --rebase --autostash
   pf = push -f
   pom = push origin master
-  up = !git fetch origin && git rebase origin/master
+  up = "!git submodule foreach -q --recursive 'git symbolic-ref -q HEAD >/dev/null || test -z \"$(git rev-list -1 --ignore-missing HEAD --not --branches --tags --remotes $sha1)\" || { echo \"$displaypath: detached HEAD has commits not on any branch; commit them to a branch first\" >&2; exit 1; }' && git pull --rebase --no-recurse-submodules && git submodule sync -q && git submodule foreach -q --recursive 'git cat-file -e $sha1 2>/dev/null || git fetch -q; git merge -q --ff-only $sha1 2>/dev/null; git submodule sync -q; true' && git submodule update --init --recursive"
   retire = "!f() { git checkout master && git tag archive/$1 $1 && git branch -D $1; }; f"
   new = checkout -t origin/master -b
   amend = commit --amend
   SS = "!f() { ARGS=`printf \"'%s' \" \"$@\"`; git submodule foreach \"git $ARGS || true\"; }; f"
+  attach = "!git submodule foreach -q --recursive 'git symbolic-ref -q HEAD >/dev/null || { b=$(git symbolic-ref -q --short refs/remotes/origin/HEAD) && b=${b#origin/} && { git merge-base --is-ancestor $sha1 origin/$b || { git fetch -q && git merge-base --is-ancestor $sha1 origin/$b; }; } && test -z \"$(git rev-list -1 $b --not --remotes 2>/dev/null)\" && git checkout -q -B $b $sha1 && git branch -q -u origin/$b && echo \"$displaypath: on $b\"; }; true'"
 [color]
   ui = auto
 [core]
@@ -29,6 +30,7 @@
 #  pager =
 [push]
   default = current
+	recurseSubmodules = on-demand
 [fetch]
   prune = true
 [rerere]

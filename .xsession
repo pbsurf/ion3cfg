@@ -11,8 +11,13 @@ xrdb -merge ~/.config/X11/Xresources
 xmodmap $HOME/.config/Xmodmap
 # path to my fonts
 xset +fp $HOME/.fonts
+# VM: no screen blanking or DPMS
+xset s off s noblank -dpms
 # for clipboard sync
 vmware-user-suid-wrapper &
 #vmware-user &
-# start window manager
-notion
+# start window manager - choose by typing `notion` or `xfce` at the console (see ~/.localrc); default is notion
+case "$WM" in
+  xfce) exec startxfce4 ;;
+  *)    exec notion ;;
+esac

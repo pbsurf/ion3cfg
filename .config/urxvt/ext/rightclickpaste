@@ -1,0 +1,12 @@
+#! perl
+
+sub on_button_press {
+    my ($self, $event) = @_;
+
+    if ($event->{button} == 3) {
+        $self->selection_request(urxvt::CurrentTime, 1);
+        return 1;
+    }
+
+    return 0;
+}

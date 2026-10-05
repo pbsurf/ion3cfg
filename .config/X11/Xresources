@@ -45,6 +45,10 @@ URxvt.iso14755_52: false
 URxvt.keysym.C-S-C: eval:selection_to_clipboard
 URxvt.keysym.C-S-V: eval:paste_clipboard
 
+! right click to paste
+URxvt.perl-lib: /home/mwhite/.config/urxvt/ext
+URxvt.perl-ext-common: default,rightclickpaste
+
 ! Switch between light and dark modes - see unix.stackexchange.com/questions/232881
 ! default colors can be changed w/ `*.color0: #ffffff`, etc. in this file
 ! query colors like this:  echo -en "\033]4;4;?\033\\"
