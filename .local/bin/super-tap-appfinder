@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+"""Open xfce4-appfinder when Super_L is tapped on its own.
+
+Watches input passively through the XRecord extension: nothing is grabbed,
+so xfce shortcuts and xfwm4's Super+drag work as usual.  A tap counts only if
+no other key or mouse button was pressed while Super_L was down and it was
+released within TAP_MS.
+
+Needs python3-xlib.
+"""
+
+import signal
+import subprocess
+
+from Xlib import X, XK, display
+from Xlib.ext import record
+from Xlib.protocol import rq
+
+COMMAND = ["xfce4-appfinder"]
+TAP_MS = 500
+
+signal.signal(signal.SIGCHLD, signal.SIG_IGN)  # don't leave zombies
+
+local_dpy = display.Display()
+record_dpy = display.Display()
+super_codes = {code for code, _ in local_dpy.keysym_to_keycodes(XK.XK_Super_L)}
+
+down_at = None  # server time of the Super_L press, None when not held
+spoiled = False  # another key or button was pressed during this hold
+
+
+def handle(reply):
+    global down_at, spoiled
+    if reply.category != record.FromServer or reply.client_swapped:
+        return
+    data = reply.data
+    while data:
+        event, data = rq.EventField(None).parse_binary_value(
+            data, record_dpy.display, None, None)
+        if event.type == X.KeyPress and event.detail in super_codes:
+            if down_at is None:  # ignore autorepeat
+                down_at, spoiled = event.time, False
+        elif event.type == X.KeyRelease and event.detail in super_codes:
+            if (down_at is not None and not spoiled
+                    and event.time - down_at <= TAP_MS):
+                subprocess.Popen(COMMAND, start_new_session=True)
+            down_at = None
+        elif event.type in (X.KeyPress, X.ButtonPress):
+            spoiled = True
+
+
+ctx = record_dpy.record_create_context(
+    0,
+    [record.AllClients],
+    [{
+        "core_requests": (0, 0),
+        "core_replies": (0, 0),
+        "ext_requests": (0, 0, 0, 0),
+        "ext_replies": (0, 0, 0, 0),
+        "delivered_events": (0, 0),
+        "device_events": (X.KeyPress, X.ButtonPress),
+        "errors": (0, 0),
+        "client_started": False,
+        "client_died": False,
+    }],
+)
+try:
+    record_dpy.record_enable_context(ctx, handle)
+finally:
+    record_dpy.record_free_context(ctx)
