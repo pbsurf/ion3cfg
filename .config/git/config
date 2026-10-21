@@ -6,7 +6,8 @@
   co = checkout
   b = branch
   ba = branch -a
-  l = !git --no-pager log -n 10
+  # as many commits as fit on one screen (counting wrapped lines); entries are NUL-separated with -z
+  l = "!f() { s=$(stty size 2>/dev/null </dev/tty); if [ -t 1 ] && [ \"${s% *}\" -gt 1 ] 2>/dev/null; then set -- -n $(git log -z -n ${s% *} \"$@\" | H=$((${s% *} - 1)) W=${s#* } perl -CS -0 -ne 'chomp; $t += ($. > 1); $t += length($_) ? int((length($_) - 1) / $ENV{W}) + 1 : 1 for split /\\n/; last if $t > $ENV{H} && $. > 1; $c = $.; END { print $c + 0 }') \"$@\"; else set -- -n 10 \"$@\"; fi; git --no-pager log \"$@\"; }; f"
   pullu = pull --rebase --autostash
   pf = push -f
   pom = push origin master
