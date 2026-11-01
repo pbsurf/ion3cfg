@@ -1,0 +1,20 @@
+#!/bin/sh
+# Panel click handler (cpugraph / genmon mem-percent): show a single htop window.
+# If one already exists, raise it and switch its sort column instead of
+# spawning another. Usage: htop-raise cpu|mem
+case "$1" in
+	mem) col=PERCENT_MEM key=M ;;
+	*)   col=PERCENT_CPU key=P ;;
+esac
+# The urxvt window is tagged with resource name "htop" so we can find it.
+win=$(xdotool search --classname '^htop$' 2>/dev/null | head -n1)
+if [ -n "$win" ]; then
+	xdotool windowactivate "$win"
+	# Send keys to the window directly (XSendEvent) rather than to whatever has
+	# focus, so they can't race the WM's focus change. Needs allowSendEvents,
+	# set below for this window only. ctrl+l = force htop to rescan now.
+	xdotool key --window "$win" "$key" ctrl+l
+else
+	exec urxvt -name htop -title htop -xrm '*allowSendEvents: true' \
+		-geometry 160x50-0-60 -e htop -s "$col"
+fi

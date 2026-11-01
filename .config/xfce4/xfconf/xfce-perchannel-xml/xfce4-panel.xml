@@ -73,7 +73,7 @@
       <property name="smt-stats" type="int" value="0"/>
       <property name="smt-issues" type="int" value="0"/>
       <property name="per-core-spacing" type="int" value="1"/>
-      <property name="command" type="string" value="urxvt -geometry 160x50-0-60 -e htop -s PERCENT_CPU"/>
+      <property name="command" type="string" value="/home/mwhite/.local/bin/htop-raise cpu"/>
       <property name="background" type="array">
         <value type="double" value="0.14117647058823529"/>
         <value type="double" value="0.12156862745098039"/>

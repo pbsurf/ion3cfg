@@ -9,7 +9,7 @@ exec awk '
 END {
 	u = t - a
 	printf "<txt> %d%% </txt>\n", u * 100 / t
-	print "<txtclick>urxvt -geometry 160x50-0-60 -e htop -s PERCENT_MEM</txtclick>"
+	print "<txtclick>/home/mwhite/.local/bin/htop-raise mem</txtclick>"
 	printf "<tool>Memory: %.1f / %.1f GiB used\nSwap: %.1f / %.1f GiB used</tool>\n", \
 		u / 1048576, t / 1048576, (st - sf) / 1048576, st / 1048576
 }' /proc/meminfo
