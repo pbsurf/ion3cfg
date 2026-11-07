@@ -47,7 +47,8 @@ URxvt.keysym.C-S-V: eval:paste_clipboard
 
 ! right click to paste
 URxvt.perl-lib: /home/mwhite/.config/urxvt/ext
-URxvt.perl-ext-common: default,rightclickpaste
+URxvt.perl-ext-common: default,rightclickpaste,ctrltab
+! ctrltab: Ctrl+Tab window cycling in tmux, see ~/.config/urxvt/ext/ctrltab
 
 ! Switch between light and dark modes - see unix.stackexchange.com/questions/232881
 ! default colors can be changed w/ `*.color0: #ffffff`, etc. in this file

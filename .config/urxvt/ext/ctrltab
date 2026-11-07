@@ -1,0 +1,50 @@
+#! perl
+
+# Ctrl+Tab / Ctrl+Shift+Tab for Alt-Tab style window cycling in tmux.
+# Sends private sequences for the presses and another one when Control is
+# released (or the window loses focus) after a Ctrl+Tab, which terminals
+# can't otherwise report.  See ~/.config/tmux/mru.sh
+
+use constant {
+    XK_Tab       => 0xff09,
+    XK_LeftTab   => 0xfe20,
+    XK_Control_L => 0xffe3,
+    XK_Control_R => 0xffe4,
+};
+
+sub on_key_press {
+    my ($self, $event, $keysym) = @_;
+
+    if (($keysym == XK_Tab || $keysym == XK_LeftTab)
+        && ($event->{state} & urxvt::ControlMask)) {
+        my $back = $event->{state} & urxvt::ShiftMask;
+        $self->tt_write($back ? "\e[9002~" : "\e[9001~");
+        $self->{cycling} = 1;
+        return 1;
+    }
+
+    return 0;
+}
+
+sub release {
+    my ($self) = @_;
+
+    if ($self->{cycling}) {
+        $self->{cycling} = 0;
+        $self->tt_write("\e[9003~");
+    }
+}
+
+sub on_key_release {
+    my ($self, $event, $keysym) = @_;
+
+    $self->release if $keysym == XK_Control_L || $keysym == XK_Control_R;
+    return 0;
+}
+
+sub on_focus_out {
+    my ($self) = @_;
+
+    $self->release;
+    return 0;
+}
