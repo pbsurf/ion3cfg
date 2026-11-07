@@ -142,6 +142,7 @@
       <property name="tweaks" type="empty">
         <property name="paste-on-activate" type="uint" value="2"/>
         <property name="popup-at-pointer" type="bool" value="true"/>
+        <property name="inhibit" type="bool" value="false"/>
       </property>
     </property>
   </property>
