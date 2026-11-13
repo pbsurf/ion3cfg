@@ -5,9 +5,6 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# inputrc
-export INPUTRC=$HOME/.inputrc
-
 # disable use of C-s/C-1 for scroll lock
 tty > /dev/null && stty -ixon -ixoff
 
@@ -212,7 +209,7 @@ _sqlite3_fixed() { _init_completion || return; _filedir; } && complete -F _sqlit
 # upload dotfiles before sshing - only needs to be used on first connect
 sshrc() {
   host=$1 ; shift
-  scp ~/.inputrc ~/.bash_profile ~/.bashrc $host:
+  scp ~/.inputrc ~/.profile ~/.bashrc $host:
   ssh $host "$@"
 }
 
@@ -232,11 +229,4 @@ fi
 
 if [ -f ~/.localrc ]; then
   source $HOME/.localrc
-fi
-
-# ssh-agent runs as a systemd user service (~/.config/systemd/user/ssh-agent.service) so keys survive X restarts;
-#  setting this before startx also stops Xsession from starting its own agent
-#  (only for local sessions and if the agent exists, so forwarded agents over ssh - incl. via sshrc - are left alone)
-if [ -z "$SSH_CONNECTION" ] && [ -S "$XDG_RUNTIME_DIR/openssh_agent" ]; then
-  export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/openssh_agent
 fi

@@ -1,3 +1,6 @@
+[user]
+  name = pbsurf
+  email = 1332998+pbsurf@users.noreply.github.com
 [alias]
   s = status
   d = !git --no-pager diff
@@ -37,7 +40,7 @@
   prune = true
 [rerere]
   enabled = 1
-[include]
-  path = ~/.config/git/local
 [pull]
   ff = only
+[include]
+  path = ~/.config/git/local
