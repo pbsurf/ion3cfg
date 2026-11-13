@@ -11,6 +11,9 @@ done
 unset d
 export PATH
 
+# keep wget config and HSTS cache out of ~
+export WGETRC="$HOME/.config/wgetrc"
+
 # ssh-agent runs as a systemd user service (~/.config/systemd/user/ssh-agent.service) so keys survive X restarts;
 #  setting this here (vs. .bashrc) puts it in the desktop session env, and also stops Xsession from starting its own agent
 #  (only for local sessions and if the agent exists, so forwarded agents over ssh - incl. via sshrc - are left alone)
